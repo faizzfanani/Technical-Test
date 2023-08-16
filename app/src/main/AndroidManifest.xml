@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.faizfanani.movieapp">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MovieApp"
+        tools:targetApi="31" >
+        <!--Meta-data-->
+        <meta-data
+            android:name="SERVICE_URL"
+            android:value="${SERVICE_URL}" />
+        <meta-data
+            android:name="APP_ID"
+            android:value="${APP_ID}" />
+        <meta-data
+            android:name="API_HEADER"
+            android:value="${API_HEADER}" />
+        <meta-data
+            android:name="API_KEY"
+            android:value="${API_KEY}" />
+        <meta-data
+            android:name="API_READ_ACCESS_TOKEN"
+            android:value="${API_READ_ACCESS_TOKEN}" />
+        <meta-data
+            android:name="APP_VERSION_CODE"
+            android:value="${APP_VERSION_CODE}" />
+        <meta-data
+            android:name="APP_VERSION_NAME"
+            android:value="${APP_VERSION_NAME}" />
+        <meta-data
+            android:name="APP_MATRIX_VERSION"
+            android:value="${APP_MATRIX_VERSION}" />
+    </application>
+
+</manifest>
