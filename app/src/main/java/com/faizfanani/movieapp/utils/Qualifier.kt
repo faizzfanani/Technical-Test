@@ -23,6 +23,10 @@ annotation class ServiceUrl
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class ImageUrl
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class ServiceRetrofit
 
 @Qualifier

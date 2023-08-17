@@ -1,7 +1,7 @@
 package com.faizfanani.movieapp.interactor.uimodel
 
 /**
- * Created by Moh.Faiz Fanani on 01/08/2023
+ * Created by Moh.Faiz Fanani on 15/08/2023
  */
 data class Movie(
     val id: Int,
@@ -12,7 +12,7 @@ data class Movie(
     val overview: String,
     val originalLanguage: String,
     val releaseDate: String,
-    val voteAverage: Int,
+    val voteAverage: Double,
     val voteCount: Int,
     val backdropPath: String,
     val posterPath: String,

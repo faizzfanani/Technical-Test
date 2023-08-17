@@ -41,6 +41,13 @@ object NetworkModule {
         return getStringMetadata(appContext, "SERVICE_URL")!!
     }
 
+    @ImageUrl
+    @Singleton
+    @Provides
+    fun provideImageUrl(@ApplicationContext appContext: Context): String {
+        return getStringMetadata(appContext, "IMAGE_URL")!!
+    }
+
     @Singleton
     @Provides
     fun provideNoConnectionInterceptor(@ApplicationContext appContext: Context) =

@@ -9,5 +9,5 @@ import com.faizfanani.movieapp.interactor.util.StatusResult
  */
 interface MainRepository {
     suspend fun getGenreList(): StatusResult<List<Genre>>
-    suspend fun getMovieByGenre(genre: String, page: Int) : StatusResult<List<Movie>>
+    suspend fun getMovies(genre: String?, page: Int) : StatusResult<List<Movie>>
 }

@@ -24,7 +24,7 @@ data class MovieResponse(
     @SerializedName("release_date")
     val releaseDate: String?,
     @SerializedName("vote_average")
-    val voteAverage: Int?,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
     val voteCount: Int?,
     @SerializedName("backdrop_path")
