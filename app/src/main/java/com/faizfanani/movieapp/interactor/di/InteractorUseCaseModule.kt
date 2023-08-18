@@ -22,4 +22,8 @@ abstract class InteractorUseCaseModule {
     @Binds
     abstract fun bindGetMoviesUseCase(impl: GetMoviesUseCaseImpl): GetMoviesUseCase
 
+    @ViewModelScoped
+    @Binds
+    abstract fun bindSearchMoviesUseCase(impl: SearchMoviesUseCaseImpl): SearchMoviesUseCase
+
 }

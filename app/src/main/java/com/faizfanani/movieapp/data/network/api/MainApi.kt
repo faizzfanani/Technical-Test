@@ -22,4 +22,11 @@ interface MainApi {
         @Query("page") page: Int,
     ): MovieListResponse
 
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @HeaderMap requestHeader: Map<String, String>,
+        @Query("query") keyword: String?,
+        @Query("page") page: Int,
+    ): MovieListResponse
+
 }

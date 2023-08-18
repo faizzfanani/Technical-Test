@@ -6,8 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.viewModelScope
 import com.faizfanani.movieapp.R
 import com.faizfanani.movieapp.databinding.ActivityHomeBinding
 import com.faizfanani.movieapp.interactor.util.isLoading
@@ -21,6 +20,8 @@ import com.faizfanani.movieapp.ui.viewmodel.HomeViewModel.Companion.SIZE
 import com.faizfanani.movieapp.utils.BaseActivity
 import com.faizfanani.movieapp.utils.PaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
@@ -32,6 +33,8 @@ class HomeActivity : BaseActivity() {
         get() = binding.rvGenre.adapter as GenreAdapter
     private val movieAdapter
         get() = binding.rvMovie.adapter as MovieAdapter
+    private val searchMovieAdapter
+        get() = binding.rvSearchMovie.adapter as MovieAdapter
 
 //    companion object {
 //        private const val REQUEST_SUCCESS = "com.faizfanani.movieapp.ui.view.HomeActivity.REQUEST_SUCCESS"
@@ -64,6 +67,27 @@ class HomeActivity : BaseActivity() {
 //        }
 //    }
     private fun initViews() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refresh()
+            binding.labelDiscover.visibility = View.VISIBLE
+            binding.labelGenre.visibility = View.VISIBLE
+        }
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isNotEmpty()) {
+                    viewModel.viewModelScope.launch {
+                        delay(500)
+                        viewModel.keyword.postValue(newText)
+                    }
+                } else {
+                    viewModel.refresh()
+                }
+                return false
+            }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+        })
         binding.rvGenre.apply {
             isNestedScrollingEnabled = true
             adapter = GenreAdapter { genre ->
@@ -74,7 +98,7 @@ class HomeActivity : BaseActivity() {
         }
 
         binding.rvMovie.apply {
-            isNestedScrollingEnabled = false
+            setHasFixedSize(true)
             adapter = MovieAdapter { movieId ->
                 actionWithDebounce {
 
@@ -82,12 +106,27 @@ class HomeActivity : BaseActivity() {
             }
             addOnScrollListener(object : PaginationScrollListener() {
                 override fun loadMoreItems() { viewModel.getMovies() }
-                override fun getTotalRowCount(): Int = SIZE/2
+                override fun getTotalRowCount(): Int = SIZE
                 override fun isLastPage(): Boolean = viewModel.isLastPage
                 override fun isLoading(): Boolean = viewModel.movie.value.isLoading()
                 override fun isTotalRowException(): Boolean = false
             })
+        }
 
+        binding.rvSearchMovie.apply {
+            setHasFixedSize(true)
+            adapter = MovieAdapter { movieId ->
+                actionWithDebounce {
+
+                }
+            }
+            addOnScrollListener(object : PaginationScrollListener() {
+                override fun loadMoreItems() { viewModel.searchMovies() }
+                override fun getTotalRowCount(): Int = SIZE
+                override fun isLastPage(): Boolean = viewModel.isLastPage
+                override fun isLoading(): Boolean = viewModel.searchResultMovie.value.isLoading()
+                override fun isTotalRowException(): Boolean = false
+            })
         }
     }
     private fun bindViewModel() {
@@ -98,7 +137,7 @@ class HomeActivity : BaseActivity() {
                     binding.rvGenre.visibility = View.INVISIBLE
                 }
                 .onSuccess {
-                    genreAdapter.addList(it)
+                    genreAdapter.addList(it.distinct())
                     binding.shimmerGenre.visibility = View.GONE
                     binding.rvGenre.visibility = View.VISIBLE
                 }
@@ -113,11 +152,13 @@ class HomeActivity : BaseActivity() {
             status
                 .onLoading {
                     binding.shimmerMovie.visibility = View.VISIBLE
+                    binding.rvSearchMovie.visibility = View.GONE
                     binding.rvMovie.visibility = View.GONE
                 }
                 .onSuccess {
-                    movieAdapter.addList(it)
+                    movieAdapter.addList(it.distinct())
                     binding.shimmerMovie.visibility = View.GONE
+                    binding.rvSearchMovie.visibility = View.GONE
                     binding.rvMovie.visibility = View.VISIBLE
                 }
                 .onErrorMessage { message, _ ->
@@ -127,8 +168,34 @@ class HomeActivity : BaseActivity() {
                 }
         }
 
+        viewModel.searchResultMovie.observe(this) { status ->
+            status
+                .onLoading {
+                    binding.shimmerMovie.visibility = View.VISIBLE
+                    binding.rvMovie.visibility = View.GONE
+                    binding.rvSearchMovie.visibility = View.GONE
+                    binding.labelDiscover.visibility = View.GONE
+                    binding.labelGenre.visibility = View.GONE
+                    binding.rvGenre.visibility = View.GONE
+                }
+                .onSuccess {
+                    searchMovieAdapter.addList(it.distinct())
+                    binding.shimmerMovie.visibility = View.GONE
+                    binding.rvMovie.visibility = View.GONE
+                    binding.rvSearchMovie.visibility = View.VISIBLE
+                }
+                .onErrorMessage { message, _ ->
+                    binding.shimmerMovie.visibility = View.GONE
+                    binding.rvSearchMovie.visibility = View.GONE
+                    showMessage(getString(R.string.data_is_empty), message, null)
+                }
+        }
+
         viewModel.genreName.observe(this) {
             viewModel.refresh()
+        }
+        viewModel.keyword.observe(this) {
+            viewModel.searchMovies()
         }
     }
 

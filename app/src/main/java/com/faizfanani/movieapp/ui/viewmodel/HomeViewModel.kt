@@ -7,6 +7,7 @@ import com.faizfanani.movieapp.interactor.uimodel.Genre
 import com.faizfanani.movieapp.interactor.uimodel.Movie
 import com.faizfanani.movieapp.interactor.usecase.GetGenreUseCase
 import com.faizfanani.movieapp.interactor.usecase.GetMoviesUseCase
+import com.faizfanani.movieapp.interactor.usecase.SearchMoviesUseCase
 import com.faizfanani.movieapp.interactor.util.StatusResult
 import com.faizfanani.movieapp.interactor.util.onErrorException
 import com.faizfanani.movieapp.interactor.util.onSuccess
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getGenreUseCase: GetGenreUseCase,
     private val getMoviesUseCase: GetMoviesUseCase,
+    private val searchMoviesUseCase: SearchMoviesUseCase,
 ) : ViewModel(){
 
     companion object {
@@ -30,10 +32,17 @@ class HomeViewModel @Inject constructor(
 
     val genre = MutableLiveData<StatusResult<List<Genre>>>()
     val movie = MutableLiveData<StatusResult<List<Movie>>>()
+    val searchResultMovie = MutableLiveData<StatusResult<List<Movie>>>()
     private val tempList = arrayListOf<Movie>()
+    private val searchTempList = arrayListOf<Movie>()
     private var currentPage = FIRST_PAGE
     val genreName = MutableLiveData<String>()
+    val keyword = MutableLiveData<String>()
     var isLastPage = false
+
+    init {
+        getGenre()
+    }
 
     private fun getGenre() {
         genre.postValue(StatusResult.Loading())
@@ -67,9 +76,29 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
+
+    fun searchMovies() {
+        searchResultMovie.postValue(StatusResult.Loading())
+        currentPage = FIRST_PAGE
+        viewModelScope.launch {
+            searchMoviesUseCase(keyword = keyword.value, page = currentPage)
+                .onSuccess {
+                    isLastPage = if (it.size == SIZE) {
+                        currentPage++
+                        false
+                    } else {
+                        true
+                    }
+                    searchTempList.addAll(it)
+                    searchResultMovie.postValue(StatusResult.Success(searchTempList))
+                }
+                .onErrorException { e, _ ->
+                    searchResultMovie.postValue(StatusResult.Error(e))
+                }
+        }
+    }
     fun refresh() {
         currentPage = FIRST_PAGE
-        getGenre()
         getMovies()
     }
 }

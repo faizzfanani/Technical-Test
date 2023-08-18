@@ -82,4 +82,43 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun searchMovies(keyword: String?, page: Int): StatusResult<List<Movie>> {
+        return withContext(ioDispatcher) {
+            try {
+                val reqHeader = hashMapOf(
+                    apiHeader to accessToken,
+                )
+                val response = mainApi.searchMovies(reqHeader, keyword, page)
+                val movieList = response.movieList
+                if (movieList.isEmpty()) {
+                    throw CustomMessageException(Constants.DATA_IS_EMPTY)
+                } else {
+                    return@withContext StatusResult.Success(
+                        movieList.map { movie ->
+                            val date = movie.releaseDate?.let {
+                                StringUtils.formatStringToDate(
+                                    it,
+                                    Constants.ORIGINAL_DATE_FORMAT,
+                                    Locale.ENGLISH
+                                )
+                            }
+                            val formattedDate = StringUtils.formatDateTime(
+                                date,
+                                Constants.DISPLAY_DATE_FORMAT,
+                                Locale("en")
+                            )
+                            movie.copy(
+                                posterPath = imageUrl + movie.posterPath,
+                                backdropPath = imageUrl + movie.backdropPath
+                            ).toMovieUI(formattedDate)
+                        }
+                    )
+                }
+            } catch (e: Exception) {
+                Timber.tag("Search movies").e(e)
+                return@withContext StatusResult.Error(e)
+            }
+        }
+    }
 }
