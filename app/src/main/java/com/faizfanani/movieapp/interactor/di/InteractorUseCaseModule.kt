@@ -8,7 +8,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 
 /**
- * Created by Moh.Faiz Fanani on 01/08/2023
+ * Created by Moh.Faiz Fanani on 17/08/2023
  */
 
 @Module
@@ -26,4 +26,7 @@ abstract class InteractorUseCaseModule {
     @Binds
     abstract fun bindSearchMoviesUseCase(impl: SearchMoviesUseCaseImpl): SearchMoviesUseCase
 
+    @ViewModelScoped
+    @Binds
+    abstract fun bindGetMovieDetailUseCase(impl: GetMovieDetailUseCaseImpl): GetMovieDetailUseCase
 }

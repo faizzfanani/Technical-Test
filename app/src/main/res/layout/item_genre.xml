@@ -4,14 +4,15 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_5"
+        android:layout_marginBottom="@dimen/space_5"
         android:background="@drawable/outline_menu_selector">
         <TextView
             android:id="@+id/genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Adventure"
-            android:textSize="@dimen/text_size_14"
+            android:textSize="@dimen/text_size_12"
             android:fontFamily="@font/custom_sans_light"
             android:textColor="@color/selector_bottom_navigation_text"
             android:layout_margin="@dimen/space_5"

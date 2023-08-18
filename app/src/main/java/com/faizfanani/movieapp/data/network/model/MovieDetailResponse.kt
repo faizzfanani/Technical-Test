@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Created by Moh.Faiz Fanani on 17/08/2023
  */
 
-data class MovieResponse(
+data class MovieDetailResponse(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("adult")
@@ -15,8 +15,8 @@ data class MovieResponse(
     val originalTitle: String?,
     @SerializedName("title")
     val title: String?,
-    @SerializedName("genre_ids")
-    val genreIDs: List<Int>?,
+    @SerializedName("genres")
+    val genres: List<GenreResponse>?,
     @SerializedName("overview")
     val overview: String?,
     @SerializedName("original_language")

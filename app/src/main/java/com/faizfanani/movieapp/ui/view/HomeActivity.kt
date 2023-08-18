@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.viewModelScope
 import com.faizfanani.movieapp.R
 import com.faizfanani.movieapp.databinding.ActivityHomeBinding
-import com.faizfanani.movieapp.interactor.uimodel.Movie
 import com.faizfanani.movieapp.interactor.util.isLoading
 import com.faizfanani.movieapp.interactor.util.onErrorMessage
 import com.faizfanani.movieapp.interactor.util.onLoading
@@ -203,9 +202,9 @@ class HomeActivity : BaseActivity() {
         ).show(supportFragmentManager, "Show message")
     }
 
-    private fun showMovieDetail(movie: Movie) {
+    private fun showMovieDetail(movieID: Int) {
         MovieDetailBottomSheet.newInstance(
-            movie = movie
+            movieID = movieID
         ).show(supportFragmentManager, "Show movie detail")
     }
 }

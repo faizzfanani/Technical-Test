@@ -1,10 +1,12 @@
 package com.faizfanani.movieapp.data.repository
 
 import com.faizfanani.movieapp.data.converter.toGenreUI
+import com.faizfanani.movieapp.data.converter.toMovieDetailUI
 import com.faizfanani.movieapp.data.converter.toMovieUI
 import com.faizfanani.movieapp.data.network.api.MainApi
 import com.faizfanani.movieapp.interactor.uimodel.Genre
 import com.faizfanani.movieapp.interactor.uimodel.Movie
+import com.faizfanani.movieapp.interactor.uimodel.MovieDetail
 import com.faizfanani.movieapp.interactor.util.StatusResult
 import com.faizfanani.movieapp.utils.*
 import com.faizfanani.movieapp.utils.exception.CustomMessageException
@@ -117,6 +119,40 @@ class MainRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.tag("Search movies").e(e)
+                return@withContext StatusResult.Error(e)
+            }
+        }
+    }
+    override suspend fun getMovieDetail(movieID: Int): StatusResult<MovieDetail> {
+        return withContext(ioDispatcher) {
+            try {
+                val reqHeader = hashMapOf(
+                    apiHeader to accessToken,
+                )
+                val response = mainApi.getDetailMovie(reqHeader, movieID)
+
+                val genres = response.genres?.map { it.toGenreUI() }
+                val date = response.releaseDate?.let {
+                    StringUtils.formatStringToDate(
+                        it,
+                        Constants.ORIGINAL_DATE_FORMAT,
+                        Locale.ENGLISH
+                    )
+                }
+                val formattedDate = StringUtils.formatDateTime(
+                    date,
+                    Constants.DISPLAY_DATE_FORMAT,
+                    Locale("en")
+                )
+
+                return@withContext StatusResult.Success(
+                    response.copy(
+                        posterPath = imageUrl + response.posterPath,
+                        backdropPath = imageUrl + response.backdropPath
+                    ).toMovieDetailUI(formattedDate, genres)
+                )
+            } catch (e: Exception) {
+                Timber.tag("Get movie detail").e(e)
                 return@withContext StatusResult.Error(e)
             }
         }

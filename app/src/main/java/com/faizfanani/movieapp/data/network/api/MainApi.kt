@@ -1,9 +1,11 @@
 package com.faizfanani.movieapp.data.network.api
 
 import com.faizfanani.movieapp.data.network.model.GenreListResponse
+import com.faizfanani.movieapp.data.network.model.MovieDetailResponse
 import com.faizfanani.movieapp.data.network.model.MovieListResponse
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -28,5 +30,11 @@ interface MainApi {
         @Query("query") keyword: String?,
         @Query("page") page: Int,
     ): MovieListResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getDetailMovie(
+        @HeaderMap requestHeader: Map<String, String>,
+        @Path("movie_id") movieId: Int,
+    ): MovieDetailResponse
 
 }

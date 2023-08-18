@@ -1,19 +1,15 @@
 package com.faizfanani.movieapp.interactor.uimodel
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-
 /**
  * Created by Moh.Faiz Fanani on 17/08/2023
  */
-@Parcelize
-data class Movie(
+
+data class MovieDetail(
     val id: Int,
     val isAdult: Boolean,
     val originalTitle: String,
     val title: String,
-    val genreIDs: List<Int>,
+    val genres: List<Genre>,
     val overview: String,
     val originalLanguage: String,
     val releaseDate: String,
@@ -21,4 +17,4 @@ data class Movie(
     val voteCount: Int,
     val backdropPath: String,
     val posterPath: String,
-) : Parcelable
+)
