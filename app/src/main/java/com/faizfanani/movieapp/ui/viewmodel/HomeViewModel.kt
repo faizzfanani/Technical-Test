@@ -33,16 +33,12 @@ class HomeViewModel @Inject constructor(
     val genre = MutableLiveData<StatusResult<List<Genre>>>()
     val movie = MutableLiveData<StatusResult<List<Movie>>>()
     val searchResultMovie = MutableLiveData<StatusResult<List<Movie>>>()
-    private val tempList = arrayListOf<Movie>()
-    private val searchTempList = arrayListOf<Movie>()
+    val tempList = arrayListOf<Movie>()
+    val searchTempList = arrayListOf<Movie>()
     private var currentPage = FIRST_PAGE
     val genreName = MutableLiveData<String>()
     val keyword = MutableLiveData<String>()
     var isLastPage = false
-
-    init {
-        getGenre()
-    }
 
     private fun getGenre() {
         genre.postValue(StatusResult.Loading())
@@ -98,7 +94,9 @@ class HomeViewModel @Inject constructor(
         }
     }
     fun refresh() {
+        tempList.clear()
         currentPage = FIRST_PAGE
+        isLastPage = false
         getGenre()
         getMovies()
     }

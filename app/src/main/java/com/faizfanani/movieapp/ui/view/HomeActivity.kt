@@ -75,6 +75,7 @@ class HomeActivity : BaseActivity() {
                 if (newText.isNotEmpty()) {
                     viewModel.viewModelScope.launch {
                         delay(500)
+                        viewModel.searchTempList.clear()
                         viewModel.keyword.postValue(newText)
                     }
                 } else {
@@ -192,10 +193,14 @@ class HomeActivity : BaseActivity() {
         }
 
         viewModel.genreName.observe(this) {
-            refresh()
+            if (it.isNotEmpty()) {
+                refresh()
+                binding.rvMovie.smoothScrollToPosition(0)
+            }
         }
         viewModel.keyword.observe(this) {
-            viewModel.searchMovies()
+            if (it.isNotEmpty())
+                viewModel.searchMovies()
         }
     }
 

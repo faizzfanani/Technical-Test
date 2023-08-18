@@ -57,7 +57,7 @@ class GenreAdapter(private val listener: (String) -> Unit) : RecyclerView.Adapte
             binding.genre.text = genre.genreName
             binding.root.setOnClickListener {
                 binding.root.isSelected = true
-                listener(genre.genreName)
+                listener(genre.genreId.toString())
             }
         }
 
