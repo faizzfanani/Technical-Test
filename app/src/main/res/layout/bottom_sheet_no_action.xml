@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/space_16"
+        android:paddingBottom="@dimen/space_16"
+        android:background="@drawable/rounded_white_top">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/notch"
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_4"
+            android:layout_marginTop="@dimen/space_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/top_notch_grey" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_24"
+            app:fontFamily="@font/custom_sans_medium"
+            android:textColor="@color/grey_21"
+            android:textSize="@dimen/text_size_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notch"
+            tools:text="title" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            app:fontFamily="@font/custom_sans_light"
+            android:textColor="@color/grey_75"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

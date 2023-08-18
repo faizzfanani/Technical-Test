@@ -25,7 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/content_desc_movie_poster" />
             </com.google.android.material.card.MaterialCardView>
             <TextView
                 android:id="@+id/item_rating"

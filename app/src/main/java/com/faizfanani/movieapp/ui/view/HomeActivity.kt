@@ -1,20 +1,20 @@
 package com.faizfanani.movieapp.ui.view
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.viewModelScope
 import com.faizfanani.movieapp.R
 import com.faizfanani.movieapp.databinding.ActivityHomeBinding
+import com.faizfanani.movieapp.interactor.uimodel.Movie
 import com.faizfanani.movieapp.interactor.util.isLoading
 import com.faizfanani.movieapp.interactor.util.onErrorMessage
 import com.faizfanani.movieapp.interactor.util.onLoading
 import com.faizfanani.movieapp.interactor.util.onSuccess
 import com.faizfanani.movieapp.ui.view.adapter.GenreAdapter
 import com.faizfanani.movieapp.ui.view.adapter.MovieAdapter
+import com.faizfanani.movieapp.ui.view.bottomsheet.MovieDetailBottomSheet
+import com.faizfanani.movieapp.ui.view.bottomsheet.NoActionBottomSheet
 import com.faizfanani.movieapp.ui.viewmodel.HomeViewModel
 import com.faizfanani.movieapp.ui.viewmodel.HomeViewModel.Companion.SIZE
 import com.faizfanani.movieapp.utils.BaseActivity
@@ -36,15 +36,10 @@ class HomeActivity : BaseActivity() {
     private val searchMovieAdapter
         get() = binding.rvSearchMovie.adapter as MovieAdapter
 
-//    companion object {
-//        private const val REQUEST_SUCCESS = "com.faizfanani.movieapp.ui.view.HomeActivity.REQUEST_SUCCESS"
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //callbackListener()
         initViews()
         bindViewModel()
     }
@@ -54,18 +49,6 @@ class HomeActivity : BaseActivity() {
         refresh()
     }
 
-//    private fun callbackListener() {
-//        supportFragmentManager.setFragmentResultListener(
-//            REQUEST_SUCCESS,
-//            this
-//        ) { _, bundle ->
-//            if (bundle.getString(Constants.ACTION_RESULT) == Constants.RESULT_DISMISS) {
-//                val intent = Intent(applicationContext, MainActivity::class.java)
-//                startActivity(intent)
-//                finish()
-//            }
-//        }
-//    }
     private fun initViews() {
         binding.swipeRefresh.setOnRefreshListener {
             refresh()
@@ -98,9 +81,9 @@ class HomeActivity : BaseActivity() {
 
         binding.rvMovie.apply {
             setHasFixedSize(true)
-            adapter = MovieAdapter { movieId ->
+            adapter = MovieAdapter {
                 actionWithDebounce {
-
+                    showMovieDetail(it)
                 }
             }
             addOnScrollListener(object : PaginationScrollListener() {
@@ -114,9 +97,9 @@ class HomeActivity : BaseActivity() {
 
         binding.rvSearchMovie.apply {
             setHasFixedSize(true)
-            adapter = MovieAdapter { movieId ->
+            adapter = MovieAdapter {
                 actionWithDebounce {
-
+                    showMovieDetail(it)
                 }
             }
             addOnScrollListener(object : PaginationScrollListener() {
@@ -143,7 +126,7 @@ class HomeActivity : BaseActivity() {
                 .onErrorMessage { message, _ ->
                     binding.shimmerGenre.visibility = View.GONE
                     binding.rvGenre.visibility = View.GONE
-                    showMessage(getString(R.string.data_is_empty), message, null)
+                    showMessage(getString(R.string.data_is_empty), message)
                 }
         }
 
@@ -165,7 +148,7 @@ class HomeActivity : BaseActivity() {
                     binding.shimmerMovie.visibility = View.GONE
                     binding.rvMovie.visibility = View.GONE
                     binding.swipeRefresh.isRefreshing = false
-                    showMessage(getString(R.string.data_is_empty), message, null)
+                    showMessage(getString(R.string.data_is_empty), message)
                 }
         }
 
@@ -188,7 +171,7 @@ class HomeActivity : BaseActivity() {
                 .onErrorMessage { message, _ ->
                     binding.shimmerMovie.visibility = View.GONE
                     binding.rvSearchMovie.visibility = View.GONE
-                    showMessage(getString(R.string.data_is_empty), message, null)
+                    showMessage(getString(R.string.data_is_empty), message)
                 }
         }
 
@@ -199,37 +182,11 @@ class HomeActivity : BaseActivity() {
             }
         }
         viewModel.keyword.observe(this) {
-            if (it.isNotEmpty())
+            if (it.isNotEmpty()) {
                 viewModel.searchMovies()
+                binding.rvSearchMovie.smoothScrollToPosition(0)
+            }
         }
-    }
-
-//    private fun validateInput(): Boolean {
-//        return if (binding.etCredentials.text.isNullOrEmpty()){
-//            binding.tilCredentials.error = "Harap isi email terlebih dahulu"
-//            false
-//        } else if (binding.etPassword.text.isNullOrEmpty()){
-//            binding.tilPassword.error = "Harap isi password terlebih dahulu"
-//            false
-//        } else {
-//            viewModel.email = binding.etCredentials.text.toString()
-//            viewModel.password = binding.etPassword.text.toString()
-//            true
-//        }
-//    }
-
-    private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-        this.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                afterTextChanged.invoke(editable.toString())
-            }
-        })
     }
 
     private fun refresh() {
@@ -238,12 +195,17 @@ class HomeActivity : BaseActivity() {
         binding.labelGenre.visibility = View.VISIBLE
     }
 
-    private fun showMessage(title: String, message: String?, requestKey: String?) {
-//        NoActionBottomSheet.newInstance(
-//            title = title,
-//            desc = message,
-//            autoDismiss = 3000,
-//            requestKey = requestKey
-//        ).show(supportFragmentManager, "Login")
+    private fun showMessage(title: String, message: String?) {
+        NoActionBottomSheet.newInstance(
+            title = title,
+            desc = message,
+            autoDismiss = 3000,
+        ).show(supportFragmentManager, "Show message")
+    }
+
+    private fun showMovieDetail(movie: Movie) {
+        MovieDetailBottomSheet.newInstance(
+            movie = movie
+        ).show(supportFragmentManager, "Show movie detail")
     }
 }

@@ -95,6 +95,7 @@ class HomeViewModel @Inject constructor(
     }
     fun refresh() {
         tempList.clear()
+        searchTempList.clear()
         currentPage = FIRST_PAGE
         isLastPage = false
         getGenre()

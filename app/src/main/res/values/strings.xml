@@ -4,4 +4,7 @@
     <string name="label_genre">Genre</string>
     <string name="label_discover">Discover</string>
     <string name="btn_load_more">load more</string>
+    <string name="content_desc_movie_backdrop">Movie backdrop</string>
+    <string name="content_desc_button_close">Button close</string>
+    <string name="content_desc_movie_poster">Movie poster</string>
 </resources>

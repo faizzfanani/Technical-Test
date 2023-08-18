@@ -13,7 +13,7 @@ import com.faizfanani.movieapp.interactor.uimodel.Movie
  * Created by Moh.Faiz Fanani on 17/08/2023
  */
 class MovieAdapter(
-    private val listener: (String) -> Unit,
+    private val listener: (Movie) -> Unit,
 ) : RecyclerView.Adapter<MovieAdapter.ItemViewHolder>() {
     private val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(
@@ -56,13 +56,13 @@ class MovieAdapter(
     class ItemViewHolder private constructor(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: Movie, listener: (String) -> Unit) {
+        fun bind(movie: Movie, listener: (Movie) -> Unit) {
             binding.itemTitle.text = movie.title
             binding.itemRating.text = movie.voteAverage.toString()
             binding.itemReleaseDate.text = movie.releaseDate
             Glide.with(binding.root.context).load(movie.posterPath).into(binding.itemPoster)
             binding.root.setOnClickListener {
-                listener(movie.id.toString())
+                listener(movie)
             }
         }
 

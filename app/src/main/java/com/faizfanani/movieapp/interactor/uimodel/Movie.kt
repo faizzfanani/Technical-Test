@@ -1,8 +1,13 @@
 package com.faizfanani.movieapp.interactor.uimodel
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
 /**
  * Created by Moh.Faiz Fanani on 15/08/2023
  */
+@Parcelize
 data class Movie(
     val id: Int,
     val isAdult: Boolean,
@@ -16,4 +21,4 @@ data class Movie(
     val voteCount: Int,
     val backdropPath: String,
     val posterPath: String,
-)
+) : Parcelable
