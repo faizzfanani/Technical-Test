@@ -51,7 +51,7 @@ class HomeActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refresh()
+        refresh()
     }
 
 //    private fun callbackListener() {
@@ -68,9 +68,7 @@ class HomeActivity : BaseActivity() {
 //    }
     private fun initViews() {
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
-            binding.labelDiscover.visibility = View.VISIBLE
-            binding.labelGenre.visibility = View.VISIBLE
+            refresh()
         }
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -80,7 +78,7 @@ class HomeActivity : BaseActivity() {
                         viewModel.keyword.postValue(newText)
                     }
                 } else {
-                    viewModel.refresh()
+                    refresh()
                 }
                 return false
             }
@@ -160,10 +158,12 @@ class HomeActivity : BaseActivity() {
                     binding.shimmerMovie.visibility = View.GONE
                     binding.rvSearchMovie.visibility = View.GONE
                     binding.rvMovie.visibility = View.VISIBLE
+                    binding.swipeRefresh.isRefreshing = false
                 }
                 .onErrorMessage { message, _ ->
                     binding.shimmerMovie.visibility = View.GONE
                     binding.rvMovie.visibility = View.GONE
+                    binding.swipeRefresh.isRefreshing = false
                     showMessage(getString(R.string.data_is_empty), message, null)
                 }
         }
@@ -192,7 +192,7 @@ class HomeActivity : BaseActivity() {
         }
 
         viewModel.genreName.observe(this) {
-            viewModel.refresh()
+            refresh()
         }
         viewModel.keyword.observe(this) {
             viewModel.searchMovies()
@@ -225,6 +225,12 @@ class HomeActivity : BaseActivity() {
                 afterTextChanged.invoke(editable.toString())
             }
         })
+    }
+
+    private fun refresh() {
+        viewModel.refresh()
+        binding.labelDiscover.visibility = View.VISIBLE
+        binding.labelGenre.visibility = View.VISIBLE
     }
 
     private fun showMessage(title: String, message: String?, requestKey: String?) {

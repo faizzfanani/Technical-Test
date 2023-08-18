@@ -99,6 +99,7 @@ class HomeViewModel @Inject constructor(
     }
     fun refresh() {
         currentPage = FIRST_PAGE
+        getGenre()
         getMovies()
     }
 }
