@@ -1,9 +1,6 @@
 package com.faizfanani.movieapp.data.network.api
 
-import com.faizfanani.movieapp.data.network.model.GenreListResponse
-import com.faizfanani.movieapp.data.network.model.MovieDetailResponse
-import com.faizfanani.movieapp.data.network.model.MovieListResponse
-import com.faizfanani.movieapp.data.network.model.ReviewListResponse
+import com.faizfanani.movieapp.data.network.model.*
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.Path
@@ -44,4 +41,9 @@ interface MainApi {
         @Path("movie_id") movieId: Int,
     ): ReviewListResponse
 
+    @GET("movie/{movie_id}/videos")
+    suspend fun getTrailerVideo(
+        @HeaderMap requestHeader: Map<String, String>,
+        @Path("movie_id") movieId: Int,
+    ): TrailerResponse
 }

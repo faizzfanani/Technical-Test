@@ -59,7 +59,8 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ItemViewHolder>() {
             review.author?.let {
                 binding.tvAuthorName.text = it.name.ifEmpty { it.username }
                 binding.tvAuthorRating.text = binding.root.context.getString(R.string.label_rating, it.rating.toString())
-                Glide.with(binding.root.context).load(it.avatarPath).into(binding.imgAvatar)
+                if (it.avatarPath.isNotEmpty())
+                    Glide.with(binding.root.context).load(it.avatarPath).into(binding.imgAvatar)
             }
             binding.tvAuthorContent.text = review.content
             binding.tvAuthorDate.text = review.createdAt

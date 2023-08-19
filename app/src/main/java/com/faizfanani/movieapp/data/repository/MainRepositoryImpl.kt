@@ -183,7 +183,10 @@ class MainRepositoryImpl @Inject constructor(
                                 Constants.DISPLAY_DATE_FORMAT,
                                 Locale("en")
                             )
-                            val author = review.author?.copy(avatarPath = imageUrl + review.author.avatarPath)?.toAuthorUI()
+                            val author = review.author?.copy(
+                                avatarPath = if(review.author.avatarPath.isNullOrEmpty()) null
+                                else imageUrl + review.author.avatarPath
+                            )?.toAuthorUI()
 
                             review.toReviewUI(formattedDate, author)
                         }
@@ -191,6 +194,29 @@ class MainRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.tag("Get reviews").e(e)
+                return@withContext StatusResult.Error(e)
+            }
+        }
+    }
+
+    override suspend fun getVideoUrl(movieID: Int): StatusResult<String> {
+        return withContext(ioDispatcher) {
+            try {
+                val reqHeader = hashMapOf(
+                    apiHeader to accessToken,
+                )
+                val response = mainApi.getTrailerVideo(reqHeader, movieID).trailer
+                response?.let {
+                    val videoUrl = it.first().videoUrl
+                    if (videoUrl.isNullOrEmpty()) {
+                        throw CustomMessageException(Constants.DATA_IS_EMPTY)
+                    } else {
+                        return@withContext StatusResult.Success(("https://www.youtube.com/watch?v=$videoUrl"))
+                    }
+                } ?: throw CustomMessageException(Constants.DATA_IS_EMPTY)
+
+            } catch (e: Exception) {
+                Timber.tag("Get trailer").e(e)
                 return@withContext StatusResult.Error(e)
             }
         }

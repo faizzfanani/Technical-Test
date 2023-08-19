@@ -33,4 +33,8 @@ abstract class InteractorUseCaseModule {
     @ViewModelScoped
     @Binds
     abstract fun bindGetReviewsUseCase(impl: GetReviewsUseCaseImpl): GetReviewsUseCase
+
+    @ViewModelScoped
+    @Binds
+    abstract fun bindGetTrailerUrlUseCase(impl: GetTrailerUrlUseCaseImpl): GetTrailerUrlUseCase
 }

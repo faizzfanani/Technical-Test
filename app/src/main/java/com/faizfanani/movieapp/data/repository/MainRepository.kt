@@ -15,4 +15,5 @@ interface MainRepository {
     suspend fun searchMovies(keyword: String?, page: Int) : StatusResult<List<Movie>>
     suspend fun getMovieDetail(movieID: Int) : StatusResult<MovieDetail>
     suspend fun getReviews(movieID: Int) : StatusResult<List<Review>>
+    suspend fun getVideoUrl(movieID: Int) : StatusResult<String>
 }

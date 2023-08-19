@@ -1,9 +1,11 @@
 package com.faizfanani.movieapp.ui.view.bottomsheet
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -110,6 +112,25 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
                 .onErrorMessage { _, _ ->
                     binding.rvReview.visibility = View.GONE
                     binding.labelReview.visibility = View.GONE
+                }
+        }
+        viewModel.trailerUrl.observe(viewLifecycleOwner) { status ->
+            status
+                .onLoading {
+                    binding.videoTrailer.visibility = View.GONE
+                }
+                .onSuccess {
+                    if (it.isNotEmpty()) {
+                        binding.videoTrailer.setVideoURI(Uri.parse(it))
+                        binding.videoTrailer.setMediaController(MediaController(context))
+                        binding.videoTrailer.requestFocus()
+                        binding.videoTrailer.start()
+                        binding.videoTrailer.visibility = View.VISIBLE
+                    } else
+                        binding.videoTrailer.visibility = View.GONE
+                }
+                .onErrorMessage { _, _ ->
+                    binding.videoTrailer.visibility = View.GONE
                 }
         }
     }
