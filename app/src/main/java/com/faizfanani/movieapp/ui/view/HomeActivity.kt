@@ -49,8 +49,11 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initViews() {
+        binding.labelReset.clickWithDebounce {
+            viewModel.selectedGenre.postValue(null)
+        }
         binding.swipeRefresh.setOnRefreshListener {
-            refresh()
+            viewModel.selectedGenre.postValue(null)
         }
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -73,7 +76,7 @@ class HomeActivity : BaseActivity() {
             isNestedScrollingEnabled = true
             adapter = GenreAdapter { genre ->
                 actionWithDebounce {
-                    viewModel.genreName.postValue(genre)
+                    viewModel.selectedGenre.postValue(genre)
                 }
             }
         }
@@ -174,10 +177,15 @@ class HomeActivity : BaseActivity() {
                 }
         }
 
-        viewModel.genreName.observe(this) {
-            if (it.isNotEmpty()) {
+        viewModel.selectedGenre.observe(this) {
+            if (it != null) {
                 refresh()
-                binding.rvMovie.smoothScrollToPosition(0)
+                binding.labelDiscover.text = getString(R.string.label_selected_genre, it.genreName)
+                binding.labelReset.visibility = View.VISIBLE
+            } else {
+                refresh()
+                binding.labelDiscover.text = getString(R.string.label_discover)
+                binding.labelReset.visibility = View.GONE
             }
         }
         viewModel.keyword.observe(this) {
@@ -192,6 +200,7 @@ class HomeActivity : BaseActivity() {
         viewModel.refresh()
         binding.labelDiscover.visibility = View.VISIBLE
         binding.labelGenre.visibility = View.VISIBLE
+        binding.rvMovie.smoothScrollToPosition(0)
     }
 
     private fun showMessage(title: String, message: String?) {

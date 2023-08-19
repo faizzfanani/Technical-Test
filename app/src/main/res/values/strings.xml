@@ -11,4 +11,6 @@
     <string name="content_desc_author_avatar">Author avatar</string>
     <string name="label_overview">Overview</string>
     <string name="label_reviews">Reviews</string>
+    <string name="label_selected_genre">filter by genre : %1$s</string>
+    <string name="label_reset">reset</string>
 </resources>

@@ -1,11 +1,11 @@
 package com.faizfanani.movieapp.ui.view.bottomsheet
 
-import android.net.Uri
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
+import android.webkit.WebChromeClient
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -73,6 +73,7 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun bindViewModel() {
         viewModel.movieID.observe(viewLifecycleOwner) {
             viewModel.fetch()
@@ -80,7 +81,7 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
         viewModel.movieDetail.observe(viewLifecycleOwner) { status ->
             status
                 .onLoading {
-
+                    movieDetailVisibility(isLoading = true)
                 }
                 .onSuccess {
                     binding.tvTitle.text = it.title
@@ -93,6 +94,7 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
                     }
                     Glide.with(this).load(it.backdropPath).into(binding.imgBackdrop)
                     Glide.with(this).load(it.posterPath).into(binding.imgPoster)
+                    movieDetailVisibility(isLoading = false)
                 }
                 .onErrorMessage { _, _ ->
                     dismiss()
@@ -101,36 +103,42 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
         viewModel.reviews.observe(viewLifecycleOwner) { status ->
             status
                 .onLoading {
-
+                    reviewVisibility(isLoading = true)
                 }
                 .onSuccess {
                     if (it.isNotEmpty()) {
                         reviewAdapter.addList(it.distinct())
-                        binding.rvGenre.visibility = View.VISIBLE
+                        reviewVisibility(isLoading = false)
                     }
                 }
                 .onErrorMessage { _, _ ->
                     binding.rvReview.visibility = View.GONE
                     binding.labelReview.visibility = View.GONE
+                    binding.shimmerMovieReview.visibility = View.VISIBLE
                 }
         }
         viewModel.trailerUrl.observe(viewLifecycleOwner) { status ->
             status
                 .onLoading {
-                    binding.videoTrailer.visibility = View.GONE
+                    trailerVisibility(isLoading = true)
                 }
                 .onSuccess {
                     if (it.isNotEmpty()) {
-                        binding.videoTrailer.setVideoURI(Uri.parse(it))
-                        binding.videoTrailer.setMediaController(MediaController(context))
-                        binding.videoTrailer.requestFocus()
-                        binding.videoTrailer.start()
-                        binding.videoTrailer.visibility = View.VISIBLE
-                    } else
+                        trailerVisibility(isLoading = false)
+                        binding.videoTrailer.apply {
+                            settings.javaScriptEnabled = true
+                            webChromeClient = WebChromeClient()
+                            val url = "<iframe width=\"100%\" height=\"100%\" src=\"$it\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+                            loadData(url, "text/html", "utf-8")
+                        }
+                    } else {
                         binding.videoTrailer.visibility = View.GONE
+                        binding.shimmerMovieTrailer.visibility = View.INVISIBLE
+                    }
                 }
                 .onErrorMessage { _, _ ->
                     binding.videoTrailer.visibility = View.GONE
+                    binding.shimmerMovieTrailer.visibility = View.INVISIBLE
                 }
         }
     }
@@ -138,5 +146,31 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         mBinding = null
         super.onDestroyView()
+    }
+
+    private fun movieDetailVisibility(isLoading: Boolean) {
+        binding.tvRating.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.imgBackdrop.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.btnClose.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.tvTitle.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.containerPoster.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.labelOverview.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.tvOverview.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.tvReleaseDate.visibility = if (isLoading) View.GONE else View.VISIBLE
+
+        binding.shimmerMovieDetail.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun trailerVisibility(isLoading: Boolean) {
+        binding.videoTrailer.visibility = if (isLoading) View.GONE else View.VISIBLE
+
+        binding.shimmerMovieTrailer.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun reviewVisibility(isLoading: Boolean) {
+        binding.labelReview.visibility = if (isLoading) View.GONE else View.VISIBLE
+        binding.rvReview.visibility = if (isLoading) View.GONE else View.VISIBLE
+
+        binding.shimmerMovieReview.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
     }
 }

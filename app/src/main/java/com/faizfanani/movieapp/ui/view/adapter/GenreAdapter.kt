@@ -11,7 +11,7 @@ import com.faizfanani.movieapp.interactor.uimodel.Genre
 /**
  * Created by Moh.Faiz Fanani on 17/08/2023
  */
-class GenreAdapter(private val listener: (String) -> Unit) : RecyclerView.Adapter<GenreAdapter.ItemViewHolder>() {
+class GenreAdapter(private val listener: (Genre) -> Unit) : RecyclerView.Adapter<GenreAdapter.ItemViewHolder>() {
     private val diffCallback = object : DiffUtil.ItemCallback<Genre>() {
         override fun areItemsTheSame(
             oldItem: Genre,
@@ -53,11 +53,10 @@ class GenreAdapter(private val listener: (String) -> Unit) : RecyclerView.Adapte
     class ItemViewHolder private constructor(private val binding: ItemGenreBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(genre: Genre, listener: (String) -> Unit) {
+        fun bind(genre: Genre, listener: (Genre) -> Unit) {
             binding.genre.text = genre.genreName
             binding.root.setOnClickListener {
-                binding.root.isSelected = true
-                listener(genre.genreId.toString())
+                listener(genre)
             }
         }
 

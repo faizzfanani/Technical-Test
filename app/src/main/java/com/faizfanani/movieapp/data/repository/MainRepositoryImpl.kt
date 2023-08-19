@@ -211,7 +211,7 @@ class MainRepositoryImpl @Inject constructor(
                     if (videoUrl.isNullOrEmpty()) {
                         throw CustomMessageException(Constants.DATA_IS_EMPTY)
                     } else {
-                        return@withContext StatusResult.Success(("https://www.youtube.com/watch?v=$videoUrl"))
+                        return@withContext StatusResult.Success(("https://www.youtube.com/embed/$videoUrl"))
                     }
                 } ?: throw CustomMessageException(Constants.DATA_IS_EMPTY)
 

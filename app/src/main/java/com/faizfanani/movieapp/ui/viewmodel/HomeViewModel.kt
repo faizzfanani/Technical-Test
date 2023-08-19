@@ -33,10 +33,10 @@ class HomeViewModel @Inject constructor(
     val genre = MutableLiveData<StatusResult<List<Genre>>>()
     val movie = MutableLiveData<StatusResult<List<Movie>>>()
     val searchResultMovie = MutableLiveData<StatusResult<List<Movie>>>()
-    val tempList = arrayListOf<Movie>()
+    private val tempList = arrayListOf<Movie>()
     val searchTempList = arrayListOf<Movie>()
     private var currentPage = FIRST_PAGE
-    val genreName = MutableLiveData<String>()
+    val selectedGenre = MutableLiveData<Genre?>()
     val keyword = MutableLiveData<String>()
     var isLastPage = false
 
@@ -56,7 +56,7 @@ class HomeViewModel @Inject constructor(
     fun getMovies() {
         movie.postValue(StatusResult.Loading())
         viewModelScope.launch {
-            getMoviesUseCase(genre = genreName.value, page = currentPage)
+            getMoviesUseCase(genre = selectedGenre.value?.genreId.toString(), page = currentPage)
                 .onSuccess {
                     isLastPage = if (it.size == SIZE) {
                         currentPage++

@@ -17,7 +17,9 @@
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/item_movie.xml" value="0.2734375" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/item_review.xml" value="0.22435897435897437" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/shimmer_genre.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/shimmer_movie_detail.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/shimmer_movie_list.xml" value="0.2734375" />
+        <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/shimmer_review.xml" value="0.2734375" />
       </map>
     </option>
   </component>
