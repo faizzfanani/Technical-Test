@@ -1,11 +1,7 @@
 package com.faizfanani.movieapp.data.converter
 
-import com.faizfanani.movieapp.interactor.uimodel.Genre
-import com.faizfanani.movieapp.interactor.uimodel.Movie
-import com.faizfanani.movieapp.data.network.model.GenreResponse
-import com.faizfanani.movieapp.data.network.model.MovieDetailResponse
-import com.faizfanani.movieapp.data.network.model.MovieResponse
-import com.faizfanani.movieapp.interactor.uimodel.MovieDetail
+import com.faizfanani.movieapp.data.network.model.*
+import com.faizfanani.movieapp.interactor.uimodel.*
 
 /**
  * Created by Moh.Faiz Fanani on 01/08/2023
@@ -44,4 +40,18 @@ fun MovieDetailResponse.toMovieDetailUI(formattedDate: String?, genres: List<Gen
     voteCount = voteCount ?: 0,
     backdropPath = backdropPath ?: "",
     posterPath = posterPath ?: "",
+)
+
+fun ReviewResponse.toReviewUI(formattedDate: String?, author: Author?) = Review(
+    id = id ?: "",
+    content = content ?: "",
+    createdAt = formattedDate ?: "",
+    author = author
+)
+
+fun AuthorResponse.toAuthorUI() = Author(
+    name = name ?: "",
+    username = username ?: "",
+    avatarPath = avatarPath ?: "",
+    rating = rating ?: 0
 )

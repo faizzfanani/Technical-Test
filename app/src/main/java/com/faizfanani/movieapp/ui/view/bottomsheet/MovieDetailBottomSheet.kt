@@ -12,6 +12,7 @@ import com.faizfanani.movieapp.interactor.util.onErrorMessage
 import com.faizfanani.movieapp.interactor.util.onLoading
 import com.faizfanani.movieapp.interactor.util.onSuccess
 import com.faizfanani.movieapp.ui.view.adapter.GenreAdapter
+import com.faizfanani.movieapp.ui.view.adapter.ReviewAdapter
 import com.faizfanani.movieapp.ui.viewmodel.MovieDetailViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
         get() = mBinding!!
     private val genreAdapter
         get() = binding.rvGenre.adapter as GenreAdapter
+    private val reviewAdapter
+        get() = binding.rvReview.adapter as ReviewAdapter
 
     companion object {
         private const val MOVIE_ID = "MOVIE_ID"
@@ -58,9 +61,13 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.rvGenre.apply {
-            isNestedScrollingEnabled = false
+            isNestedScrollingEnabled = true
             isEnabled = false
             adapter = GenreAdapter {}
+        }
+        binding.rvReview.apply {
+            isNestedScrollingEnabled = false
+            adapter = ReviewAdapter()
         }
     }
 
@@ -79,7 +86,7 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
                     binding.tvReleaseDate.text = it.releaseDate
                     binding.tvRating.text = it.voteAverage.toString()
                     if (it.genres.isNotEmpty()) {
-                        genreAdapter.addList(it.genres)
+                        genreAdapter.addList(it.genres.distinct())
                         binding.rvGenre.visibility = View.VISIBLE
                     }
                     Glide.with(this).load(it.backdropPath).into(binding.imgBackdrop)
@@ -87,6 +94,22 @@ class MovieDetailBottomSheet : BottomSheetDialogFragment() {
                 }
                 .onErrorMessage { _, _ ->
                     dismiss()
+                }
+        }
+        viewModel.reviews.observe(viewLifecycleOwner) { status ->
+            status
+                .onLoading {
+
+                }
+                .onSuccess {
+                    if (it.isNotEmpty()) {
+                        reviewAdapter.addList(it.distinct())
+                        binding.rvGenre.visibility = View.VISIBLE
+                    }
+                }
+                .onErrorMessage { _, _ ->
+                    binding.rvReview.visibility = View.GONE
+                    binding.labelReview.visibility = View.GONE
                 }
         }
     }

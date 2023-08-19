@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/drawable/cursor.xml" value="0.1615" />
+        <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/drawable/ic_person_circle.xml" value="0.1615" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/drawable/outline_menu_selector.xml" value="0.1615" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/drawable/rounded_white_top.xml" value="0.1615" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/drawable/top_notch_grey.xml" value="0.1615" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/circular_progress_button.xml" value="0.1265625" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/item_genre.xml" value="0.6" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/item_movie.xml" value="0.2734375" />
+        <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/item_review.xml" value="0.22435897435897437" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/shimmer_genre.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/SEKOM/AndroidStudioProjects/MovieApp/app/src/main/res/layout/shimmer_movie_list.xml" value="0.2734375" />
       </map>

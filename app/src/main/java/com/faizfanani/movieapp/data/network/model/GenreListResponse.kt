@@ -9,3 +9,10 @@ data class GenreListResponse(
     @SerializedName("genres")
     val genreList: List<GenreResponse>,
 )
+
+data class GenreResponse(
+    @SerializedName("id")
+    val genreId: Int,
+    @SerializedName("name")
+    val genreName: String,
+)

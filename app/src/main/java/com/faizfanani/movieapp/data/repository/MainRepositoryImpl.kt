@@ -1,12 +1,11 @@
 package com.faizfanani.movieapp.data.repository
 
-import com.faizfanani.movieapp.data.converter.toGenreUI
-import com.faizfanani.movieapp.data.converter.toMovieDetailUI
-import com.faizfanani.movieapp.data.converter.toMovieUI
+import com.faizfanani.movieapp.data.converter.*
 import com.faizfanani.movieapp.data.network.api.MainApi
 import com.faizfanani.movieapp.interactor.uimodel.Genre
 import com.faizfanani.movieapp.interactor.uimodel.Movie
 import com.faizfanani.movieapp.interactor.uimodel.MovieDetail
+import com.faizfanani.movieapp.interactor.uimodel.Review
 import com.faizfanani.movieapp.interactor.util.StatusResult
 import com.faizfanani.movieapp.utils.*
 import com.faizfanani.movieapp.utils.exception.CustomMessageException
@@ -153,6 +152,45 @@ class MainRepositoryImpl @Inject constructor(
                 )
             } catch (e: Exception) {
                 Timber.tag("Get movie detail").e(e)
+                return@withContext StatusResult.Error(e)
+            }
+        }
+    }
+
+    override suspend fun getReviews(movieID: Int): StatusResult<List<Review>> {
+        return withContext(ioDispatcher) {
+            try {
+                val reqHeader = hashMapOf(
+                    apiHeader to accessToken,
+                )
+                val response = mainApi.getReviews(reqHeader, movieID)
+
+                val reviews = response.reviewList
+                if (reviews.isNullOrEmpty()) {
+                    throw CustomMessageException(Constants.DATA_IS_EMPTY)
+                } else {
+                    return@withContext StatusResult.Success(
+                        reviews.map { review ->
+                            val date = review.createdAt?.let {
+                                StringUtils.formatStringToDate(
+                                    it,
+                                    Constants.ORIGINAL_DATE_FORMAT,
+                                    Locale.ENGLISH
+                                )
+                            }
+                            val formattedDate = StringUtils.formatDateTime(
+                                date,
+                                Constants.DISPLAY_DATE_FORMAT,
+                                Locale("en")
+                            )
+                            val author = review.author?.copy(avatarPath = imageUrl + review.author.avatarPath)?.toAuthorUI()
+
+                            review.toReviewUI(formattedDate, author)
+                        }
+                    )
+                }
+            } catch (e: Exception) {
+                Timber.tag("Get reviews").e(e)
                 return@withContext StatusResult.Error(e)
             }
         }
