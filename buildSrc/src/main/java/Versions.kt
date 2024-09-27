@@ -21,7 +21,6 @@ object Versions {
     const val applicationVersion = "8.1.3"
     const val kspVersion = "1.9.20-1.0.14"
     const val jetbrainsKotlinVersion = "1.9.20"
-    const val navigationVersion = "2.7.6"
+    const val navigationVersion = "2.8.1"
     const val leakCanaryVersion = "3.0-alpha-1"
-    const val jfrogVersion = "4.31.4"
 }

@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core-storage" />
+            <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/service" />
             <option value="$PROJECT_DIR$/service/github" />
           </set>

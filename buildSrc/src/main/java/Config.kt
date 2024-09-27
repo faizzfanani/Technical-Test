@@ -17,5 +17,4 @@ object Config {
     const val githubBaseUrl = "https://api.github.com/"
 
     // key(s)
-    const val githubApiToken = "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"
 }

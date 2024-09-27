@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="github_list_url">feature:github/user-list</string>
+    <string name="github_detail_url">feature:github/user-detail</string>
+</resources>
