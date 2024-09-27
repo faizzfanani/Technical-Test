@@ -7,15 +7,15 @@ import com.faizzfanani.service_github.domain.model.GithubUser
 import com.faizzfanani.service_github.domain.repository.GithubRepository
 import javax.inject.Inject
 
-class GetGithubUserUseCase @Inject constructor(
+class SearchGithubUserUseCase @Inject constructor(
     baseUseCaseImpl: BaseUseCaseImpl,
     private val githubRepository: GithubRepository,
 ): BaseUseCase(baseUseCaseImpl) {
 
-    suspend fun execute(output: Output){
+    suspend fun execute(username: String, output: Output){
         allowExecute {
             output.loading.invoke(true)
-            githubRepository.getGithubUser()
+            githubRepository.searchGithubUser(username)
                 .collect { result ->
                     when(result){
                         is Result.Success -> {
@@ -32,7 +32,7 @@ class GetGithubUserUseCase @Inject constructor(
 
     data class Output(
         val loading: ((Boolean) -> Unit),
-        val success: ((List<GithubUser>) -> Unit),
+        val success: ((GithubUser) -> Unit),
         val error: ((String) -> Unit)
     )
 }

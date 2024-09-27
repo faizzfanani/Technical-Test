@@ -16,5 +16,5 @@ data class GithubUser(
     val publicReposCount: Int,
     val publicGistsCount: Int,
     val createdAt: String,
-    val updatedAt: String
+    val updatedAt: String,
 )

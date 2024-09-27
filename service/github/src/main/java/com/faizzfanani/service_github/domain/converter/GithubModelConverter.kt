@@ -20,7 +20,7 @@ fun GithubUserResponse.remoteToDomain() = GithubUser (
     publicReposCount = publicRepos ?: 0,
     publicGistsCount = publicGists ?: 0,
     createdAt = createdAt ?: "",
-    updatedAt = updatedAt ?: ""
+    updatedAt = updatedAt ?: "",
 )
 
 fun GithubUser.domainToEntity() = GithubEntity (
@@ -58,5 +58,5 @@ fun GithubEntity.entityToDomain() = GithubUser (
     publicReposCount = publicReposCount,
     publicGistsCount = publicGistsCount,
     createdAt = createdAt,
-    updatedAt = updatedAt
+    updatedAt = updatedAt,
 )

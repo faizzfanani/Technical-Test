@@ -6,38 +6,63 @@ import com.faizzfanani.core.base.BaseViewModel
 import com.faizzfanani.core.utils.Event
 import com.faizzfanani.service_github.domain.model.GithubUser
 import com.faizzfanani.service_github.domain.usecase.GetGithubUserUseCase
+import com.faizzfanani.service_github.domain.usecase.SearchGithubUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GithubListViewModel @Inject constructor(
-    private val getGithubUserUseCase: GetGithubUserUseCase
+    private val getGithubUserUseCase: GetGithubUserUseCase,
+    private val searchGithubUserUseCase: SearchGithubUserUseCase,
 ): BaseViewModel() {
 
     init {
         addUseCase(getGithubUserUseCase)
+        addUseCase(searchGithubUserUseCase)
     }
 
-    val successEvent = MutableLiveData<Event<List<GithubUser>>>()
+    val successListEvent = MutableLiveData<Event<List<GithubUser>>>()
+    val successDetailEvent = MutableLiveData<Event<GithubUser>>()
     val errorEvent = MutableLiveData<Event<String>>()
     val onLoadingEvent = MutableLiveData<Event<Boolean>>()
 
     val pageSize = 10
-    val isLastPage = false
+    var isLastPage = false
+    var isLoading = false
 
-    fun getGithubUser(username: String){
+    fun getGithubUser(){
         viewModelScope.launch {
-            getGithubUserUseCase.execute(username = username,
+            getGithubUserUseCase.execute(
                 output = GetGithubUserUseCase.Output(
                     success = {
-                        successEvent.value = Event(it)
+                        successListEvent.value = Event(it)
                     },
                     error = {
                         errorEvent.value = Event(it)
                     },
                     loading = {
                         onLoadingEvent.value = Event(it)
+                        isLoading = it
+                    }
+                )
+            )
+        }
+    }
+
+    fun searchGithubUser(username: String){
+        viewModelScope.launch {
+            searchGithubUserUseCase.execute(username = username,
+                output = SearchGithubUserUseCase.Output(
+                    success = {
+                        successDetailEvent.value = Event(it)
+                    },
+                    error = {
+                        errorEvent.value = Event(it)
+                    },
+                    loading = {
+                        onLoadingEvent.value = Event(it)
+                        isLoading = it
                     }
                 )
             )

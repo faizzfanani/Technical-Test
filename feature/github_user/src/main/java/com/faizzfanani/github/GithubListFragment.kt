@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.faizzfanani.core.base.BaseFragment
 import com.faizzfanani.core.domain.util.ConnectivityListener
-import com.faizzfanani.core_ui.component.PaginationScrollListener
+import com.faizzfanani.service_github.domain.model.GithubUser
 import dagger.hilt.android.AndroidEntryPoint
 import id.faizzfanani.technical_test.feature_github_user.databinding.FragmentGithubListBinding
 import timber.log.Timber
@@ -17,8 +19,6 @@ import timber.log.Timber
 class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), ConnectivityListener {
 
     private val viewModel by viewModels<GithubListViewModel>()
-
-    private var username = ""
     private val userAdapter
         get() = viewBinding.rvUser.adapter as UserAdapter
 
@@ -29,62 +29,92 @@ class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), Connectivi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.connectivityListener = this
-
         initViews()
         bindViewModel()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     private fun initViews(){
+        this.connectivityListener = this
+
         viewBinding.swipeRefresh.setOnRefreshListener {
-            viewModel.getGithubUser(username)
+            viewModel.getGithubUser()
         }
 
         viewBinding.rvUser.apply {
             setHasFixedSize(true)
             adapter = UserAdapter {
-
+                viewModel.searchGithubUser(username = it)
             }
-            addOnScrollListener(object : PaginationScrollListener() {
-                override fun loadMoreItems() { viewModel.getGithubUser(username) }
-                override fun getTotalRowCount(): Int = viewModel.pageSize
-                override fun isLastPage(): Boolean = viewModel.isLastPage
-                override fun isLoading(): Boolean = true
-                override fun isTotalRowException(): Boolean = false
-            })
+//            addOnScrollListener(object : PaginationScrollListener() {
+//                override fun loadMoreItems() { viewModel.getGithubUser(username) }
+//                override fun getTotalRowCount(): Int = viewModel.pageSize
+//                override fun isLastPage(): Boolean = viewModel.isLastPage
+//                override fun isLoading(): Boolean = viewModel.isLoading
+//                override fun isTotalRowException(): Boolean = false
+//            })
         }
+
+        viewBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    viewModel.searchGithubUser(it)
+                    if (it.isEmpty()){
+                        viewModel.getGithubUser()
+                        viewBinding.showDetail.root.visibility = View.GONE
+                    }
+
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.searchGithubUser(it)
+                    if (it.isEmpty()){
+                        viewModel.getGithubUser()
+                        viewBinding.showDetail.root.visibility = View.GONE
+                    }
+                }
+                return false
+            }
+        })
     }
 
     private fun bindViewModel(){
-        viewModel.successEvent.observe(viewLifecycleOwner){
+        viewModel.successListEvent.observe(viewLifecycleOwner){
             it.contentIfNotHaveBeenHandle?.let {data ->
                 if (data.isNotEmpty()){
-                    Timber.i("userList:success = ", data.toString())
+                    Timber.d("userList:success = ", data.toString())
                     userAdapter.addList(data.distinct())
                     viewBinding.rvUser.adapter = userAdapter
                     viewBinding.rvUser.visibility = View.VISIBLE
-                    viewBinding.swipeRefresh.isRefreshing = false
                 }
+            }
+        }
+
+        viewModel.successDetailEvent.observe(viewLifecycleOwner){
+            it.contentIfNotHaveBeenHandle?.let {data ->
+                Timber.d("userDetail:success = ", data.toString())
+                setDetail(data)
+                viewBinding.rvUser.visibility = View.GONE
             }
         }
 
         viewModel.errorEvent.observe(viewLifecycleOwner){
             it.contentIfNotHaveBeenHandle?.let { message ->
-                Timber.i("userList:error = ", message)
+                Timber.d("userList:error = ", message)
             }
         }
 
         viewModel.onLoadingEvent.observe(viewLifecycleOwner){
             it.contentIfNotHaveBeenHandle?.let { isLoading ->
-                Timber.i("userList:loading = ", isLoading.toString())
+                Timber.d("userList:loading = ", isLoading.toString())
                 viewBinding.shimmer.visibility = if (isLoading) View.VISIBLE else View.GONE
-                if (isLoading)
+                viewBinding.swipeRefresh.isRefreshing = isLoading
+                if (isLoading){
+                    viewBinding.showDetail.root.visibility = View.GONE
                     viewBinding.rvUser.visibility = View.GONE
+                }
             }
         }
 
@@ -95,8 +125,29 @@ class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), Connectivi
         }
     }
 
+    private fun setDetail(data: GithubUser){
+
+        Glide.with(requireContext()).load(data.avatarUrl).into(viewBinding.showDetail.avatar)
+        Glide.with(requireContext()).load(data.avatarUrl).into(viewBinding.showDetail.detailUser.avatar)
+        viewBinding.showDetail.detailUser.detailName.text = data.name.ifEmpty { data.username }
+        viewBinding.showDetail.itemUsername.text = data.username
+        viewBinding.showDetail.itemEmail.text = data.email
+        viewBinding.showDetail.detailUser.detailUsername.text = data.username
+        viewBinding.showDetail.detailUser.detailBio.text = data.bio
+        viewBinding.showDetail.detailUser.detailCompany.text = "Company : ${data.company}"
+        viewBinding.showDetail.detailUser.detailFollowers.text = "Followers : ${data.followersCount}"
+        viewBinding.showDetail.detailUser.detailCompany.text = "Following : ${data.followingCount}"
+
+        viewBinding.showDetail.detailUser.detailCompany.visibility = if (data.company.isEmpty()) View.GONE else View.VISIBLE
+        viewBinding.showDetail.detailUser.detailFollowers.visibility = if (data.followersCount <= 0) View.GONE else View.VISIBLE
+        viewBinding.showDetail.detailUser.detailFollowings.visibility = if (data.followingCount <= 0) View.GONE else View.VISIBLE
+
+        viewBinding.showDetail.root.visibility = View.VISIBLE
+        viewBinding.showDetail.detailUser.root.visibility = View.VISIBLE
+    }
+
     override fun isHaveInternet() {
-        viewModel.getGithubUser(username)
+        viewModel.getGithubUser()
     }
 
     override fun noInternet() {

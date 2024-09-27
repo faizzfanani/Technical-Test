@@ -1,6 +1,5 @@
 package com.faizzfanani.core.base
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.faizzfanani.core.domain.usecase.IBaseUseCase
@@ -9,20 +8,19 @@ import com.faizzfanani.core.utils.Event
 abstract class BaseViewModel: ViewModel() {
 
     private val usecases = arrayListOf<BaseUseCase>()
-    val unauthorizeEvent = MutableLiveData<Event<Boolean>>()
+    val unauthorizedEvent = MutableLiveData<Event<Boolean>>()
     val needUpdateEvent = MutableLiveData<Event<Boolean>>()
-    val underMaintainanceEvent = MutableLiveData<Event<Boolean>>()
+    val underMaintenanceEvent = MutableLiveData<Event<Boolean>>()
     val noInternetConnectionEvent = MutableLiveData<Event<Boolean>>()
     val serverErrorEvent = MutableLiveData<Event<Boolean>>()
     val showErrorMessageEvent = MutableLiveData<Event<String>>()
     private val mutableLoadingEvent = MutableLiveData<Int>()
-    val loadingEvent: LiveData<Int> = mutableLoadingEvent
 
     fun addUseCase(useCase: BaseUseCase){
         usecases.add(useCase)
         useCase.setCallback(object : IBaseUseCase.Callback{
             override fun unauthorize() {
-                unauthorizeEvent.value = Event(true)
+                unauthorizedEvent.value = Event(true)
             }
 
             override fun needUpdate() {
@@ -30,7 +28,7 @@ abstract class BaseViewModel: ViewModel() {
             }
 
             override fun underMaintainance() {
-                underMaintainanceEvent.value = Event(true)
+                underMaintenanceEvent.value = Event(true)
             }
 
             override fun noInternetConnection() {

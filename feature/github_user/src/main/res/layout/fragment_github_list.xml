@@ -26,7 +26,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/container_search"
             android:layout_width="@dimen/space_0"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/space_36"
             android:layout_margin="@dimen/space_16"
             app:cardCornerRadius="@dimen/space_5"
             app:cardElevation="@dimen/space_3"
@@ -37,7 +37,7 @@
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:queryHint="search title.."
+                app:queryHint="search username.."
                 app:queryBackground="@android:color/transparent"
                 app:iconifiedByDefault="false"/>
         </com.google.android.material.card.MaterialCardView>
@@ -63,46 +63,45 @@
             android:fontFamily="@font/custom_sans_light"
             android:textColor="@color/colorPrimary"
             android:layout_marginEnd="@dimen/space_16"
-            android:layout_marginTop="@dimen/space_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/label_discover"
             android:visibility="gone"
             tools:visibility="visible"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_user"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/space_0"
             android:layout_marginHorizontal="@dimen/space_16"
             android:layout_marginVertical="@dimen/space_8"
             tools:listitem="@layout/item_user"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/label_discover"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
             tools:visibility="visible"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_0"
-            android:layout_marginHorizontal="@dimen/space_16"
-            android:layout_marginVertical="@dimen/space_8"
-            tools:listitem="@layout/item_user"
-            tools:itemCount="2"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            app:layout_constraintTop_toBottomOf="@id/container_search"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"/>
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/show_detail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_16"
             app:layout_constraintTop_toBottomOf="@id/label_discover"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            layout="@layout/item_user"/>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer"
+            android:layout_width="@dimen/space_0"
+            android:layout_height="@dimen/space_0"
+            android:layout_marginHorizontal="@dimen/space_16"
+            app:layout_constraintTop_toBottomOf="@id/label_discover"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:visibility="gone"
             tools:visibility="visible">
             <include
