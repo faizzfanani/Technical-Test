@@ -13,13 +13,4 @@ interface GithubDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(data: List<GithubEntity>)
-
-    @Query("SELECT * FROM user_github WHERE username = :username")
-    suspend fun searchUser(username: String) : GithubEntity
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateUser(data: GithubEntity)
-
-    @Query("DELETE FROM user_github WHERE id = :id")
-    suspend fun deleteUser(id: Int)
 }

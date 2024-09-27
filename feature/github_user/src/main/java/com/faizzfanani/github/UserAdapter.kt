@@ -11,9 +11,9 @@ class UserAdapter(
     private val listener: (String) -> Unit,
 ) : RecyclerView.Adapter<UserAdapter.ItemViewHolder>() {
 
-    private var userList = listOf<GithubUser>()
+    private var userList = mutableListOf<GithubUser>()
     fun addList(newList: List<GithubUser>) {
-        userList = newList
+        userList.addAll(newList)
     }
 
     override fun onCreateViewHolder(

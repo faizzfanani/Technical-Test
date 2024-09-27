@@ -27,13 +27,16 @@ class GithubListViewModel @Inject constructor(
     val errorEvent = MutableLiveData<Event<String>>()
     val onLoadingEvent = MutableLiveData<Event<Boolean>>()
 
-    val pageSize = 10
+    val pageSize = 30
+    var currentPage = 1
     var isLastPage = false
     var isLoading = false
 
     fun getGithubUser(){
         viewModelScope.launch {
             getGithubUserUseCase.execute(
+                page = currentPage,
+                size = pageSize,
                 output = GetGithubUserUseCase.Output(
                     success = {
                         successListEvent.value = Event(it)

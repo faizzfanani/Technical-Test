@@ -12,10 +12,13 @@ class GetGithubUserUseCase @Inject constructor(
     private val githubRepository: GithubRepository,
 ): BaseUseCase(baseUseCaseImpl) {
 
-    suspend fun execute(output: Output){
+    suspend fun execute(page: Int, size: Int, output: Output){
         allowExecute {
             output.loading.invoke(true)
-            githubRepository.getGithubUser()
+            githubRepository.getGithubUser(
+                page = page,
+                size = size
+            )
                 .collect { result ->
                     when(result){
                         is Result.Success -> {

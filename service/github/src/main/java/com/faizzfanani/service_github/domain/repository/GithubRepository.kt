@@ -16,10 +16,16 @@ class GithubRepository @Inject constructor(
     private val githubApi: GithubApi,
     private val githubDao: GithubDao
 ) {
-    fun getGithubUser(): Flow<Result<List<GithubUser>>> {
+    fun getGithubUser(
+        page: Int,
+        size: Int
+    ): Flow<Result<List<GithubUser>>> {
         return flow {
             try {
-                val source = githubApi.getGithubUser()
+                val source = githubApi.getGithubUser(
+                    page = page,
+                    size = size
+                )
                 val localData = githubDao.getUsers().map { it.entityToDomain() }
                 if (source.isNotEmpty()){
                     if (localData != source)
@@ -36,11 +42,8 @@ class GithubRepository @Inject constructor(
         return flow {
             try {
                 val source = githubApi.searchGithubUser(username)
-                val localData = githubDao.searchUser(username)
                 if (source.username.isNotEmpty()){
-                    if (localData.entityToDomain() != source)
-                        githubDao.updateUser(source.domainToEntity())
-                    emit(Result.Success(localData.entityToDomain()))
+                    emit(Result.Success(source))
                 }
             }catch (e: Exception){
                 emit(Result.Error(e.message.toString()))
