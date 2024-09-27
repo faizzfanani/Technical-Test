@@ -66,4 +66,7 @@ object Libraries {
 
     //leak-canary
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanaryVersion}"
+
+    //timber
+    const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
 }

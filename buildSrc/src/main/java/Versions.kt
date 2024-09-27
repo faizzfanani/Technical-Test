@@ -23,4 +23,5 @@ object Versions {
     const val jetbrainsKotlinVersion = "1.9.20"
     const val navigationVersion = "2.8.1"
     const val leakCanaryVersion = "3.0-alpha-1"
+    const val timberVersion = "5.0.1"
 }

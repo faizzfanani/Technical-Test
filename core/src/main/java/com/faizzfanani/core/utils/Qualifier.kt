@@ -4,17 +4,17 @@ import android.content.Context
 import android.content.pm.PackageManager
 import javax.inject.Qualifier
 
-//base url qualifiers
+// base url qualifier(s)
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class GithubBaseUrl
 
-//key qualifiers
+// key qualifier(s)
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class GithubApiToken
 
-//retrofit qualifiers
+// retrofit qualifier(s)
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class GithubRetrofit

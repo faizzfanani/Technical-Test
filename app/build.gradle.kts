@@ -76,6 +76,9 @@ dependencies {
 
     implementation(Libraries.activity)
     implementation(Libraries.material)
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.activity:activity:1.9.2")
 
     testImplementation(Libraries.junit)
     androidTestImplementation(Libraries.testJunit)
@@ -93,6 +96,5 @@ dependencies {
     debugImplementation(Libraries.leakCanary)
 
     //feature modules
-//    implementation(project(":feature:news"))
-//    implementation(project(":feature:destination"))
+    implementation(project(":feature:github_user"))
 }

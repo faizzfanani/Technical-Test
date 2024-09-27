@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Movie App</string>
+    <string name="data_is_empty">Data is empty</string>
+    <string name="label_genre">Genre</string>
+    <string name="label_discover">Discover</string>
+    <string name="btn_load_more">load more</string>
+    <string name="label_rating">%1$s/10</string>
+    <string name="content_desc_movie_backdrop">Movie backdrop</string>
+    <string name="content_desc_button_close">Button close</string>
+    <string name="content_desc_movie_poster">Movie poster</string>
+    <string name="content_desc_author_avatar">Author avatar</string>
+    <string name="label_overview">Overview</string>
+    <string name="label_reviews">Reviews</string>
+    <string name="label_selected_genre">filter by genre : %1$s</string>
+    <string name="label_reset">reset</string>
+</resources>

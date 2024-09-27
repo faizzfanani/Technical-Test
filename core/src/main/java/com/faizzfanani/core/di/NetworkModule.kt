@@ -5,13 +5,12 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.faizzfanani.core.utils.GithubApiToken
 import com.faizzfanani.core.utils.GithubBaseUrl
 import com.faizzfanani.core.utils.GithubRetrofit
+import com.faizzfanani.core.utils.getStringMetadata
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.faizzfanani.core.utils.getStringMetadata
-import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -39,14 +38,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext appContext: Context, @GithubApiToken apiKey: String): OkHttpClient {
+    fun provideOkHttpClient(@ApplicationContext appContext: Context): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
         val referrerInterceptor = Interceptor { chain ->
             val chainBuilder = chain.request()
 
             val urlWithApiKey = chainBuilder.url.newBuilder()
-                .addQueryParameter("apiKey", apiKey)
                 .build()
 
             val request = chainBuilder.newBuilder()
@@ -56,13 +54,8 @@ object NetworkModule {
             chain.proceed(request)
         }
 
-//        val certificatePinner = CertificatePinner.Builder()
-//            .add("newsapi.org", "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o=")
-//            .build()
-
         builder.addInterceptor(referrerInterceptor)
         builder.addInterceptor(ChuckerInterceptor.Builder(appContext).build())
-        //builder.certificatePinner(certificatePinner)
         builder.readTimeout(60, TimeUnit.SECONDS)
         builder.connectTimeout(60, TimeUnit.SECONDS)
 
@@ -72,7 +65,7 @@ object NetworkModule {
     @GithubRetrofit
     @Provides
     @Singleton
-    fun provideNewsRetrofit(okHttpClient: OkHttpClient, @GithubBaseUrl baseUrl: String): Retrofit {
+    fun provideGithubRetrofit(okHttpClient: OkHttpClient, @GithubBaseUrl baseUrl: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

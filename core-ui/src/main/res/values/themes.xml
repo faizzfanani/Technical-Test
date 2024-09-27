@@ -1,0 +1,131 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TechnicalTest" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorSecondary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" >?attr/colorPrimary</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:ignore="NewApi">0</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <style name="button" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">@dimen/space_16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">@dimen/space_100</item>
+        <item name="android:padding">@dimen/space_5</item>
+        <item name="android:insetTop">@dimen/space_0</item>
+        <item name="android:insetBottom">@dimen/space_0</item>
+        <item name="fontFamily">@font/custom_sans_bold</item>
+    </style>
+    <style name="button.fill">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="button.outline">
+        <item name="strokeWidth">@dimen/space_2</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="button.fill_red">
+        <item name="backgroundTint">@color/red</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="button.outline_red">
+        <item name="strokeWidth">@dimen/space_2</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="strokeColor">@color/red</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="textInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/space_8</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/space_8</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/space_8</item>
+        <item name="boxCornerRadiusTopStart">@dimen/space_8</item>
+        <item name="boxStrokeColor">@color/selector_textfield_outline</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeWidthFocused">@dimen/space_2</item>
+        <item name="hintTextColor">@color/grey_75</item>
+        <item name="fontFamily">@font/custom_sans</item>
+    </style>
+    <style name="textInputEditText" parent="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_56</item>
+        <item name="fontFamily">@font/custom_sans_light</item>
+        <item name="android:fontFamily">@font/custom_sans_light</item>
+        <item name="android:lineSpacingExtra">@dimen/text_size_20</item>
+        <item name="android:paddingTop">@dimen/space_1</item>
+        <item name="android:paddingBottom">@dimen/space_1</item>
+        <item name="android:lineSpacingMultiplier">0</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/grey_21</item>
+        <item name="android:textColorHint">@color/grey_75</item>
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+    </style>
+
+    <style name="progressbar" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="android:layout_width">@dimen/space_30</item>
+        <item name="android:layout_height">@dimen/space_30</item>
+        <item name="android:indeterminateTint">@color/white</item>
+        <item name="android:elevation">@dimen/space_5</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:layout_margin">@dimen/space_5</item>
+        <item name="indicatorColor">@color/white</item>
+    </style>
+
+    <style name="bottomNavigation" parent="Widget.Design.BottomNavigationView">
+        <item name="itemIconSize">@dimen/space_24</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextColor">@color/selector_bottom_navigation_text</item>
+        <item name="itemTextAppearanceActive">@style/bottomNavigationIsSelected</item>
+        <item name="itemTextAppearanceInactive">@style/bottomNavigationNotSelected</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+        <item name="itemIconTint">@color/selector_bottom_navigation_text</item>
+    </style>
+
+    <style name="bottomNavigationIsSelected">
+        <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="bottomNavigationNotSelected">
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="bottomSheetBackground">
+        <item name="background">@drawable/rounded_white_top</item>
+        <item name="android:background">@drawable/rounded_white_top</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/grey_21</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/grey_21</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+    </style>
+
+</resources>

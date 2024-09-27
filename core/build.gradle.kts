@@ -87,4 +87,6 @@ dependencies {
     api (Libraries.coroutinesCore)
     api (Libraries.coroutinesAndroid)
 
+    // timber
+    api (Libraries.timber)
 }
