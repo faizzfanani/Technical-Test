@@ -17,7 +17,7 @@ import com.faizzfanani.core_storage.entity.GithubEntity
         */
 
         /*RENAME TABLE OR COLUMN
-        AutoMigration(from = 2, to = 3, spec = LivinMerchantDatabase.MyAutoMigration::class),
+        AutoMigration(from = 2, to = 3, spec = LocalStorageDatabase.MyAutoMigration::class),
         endregion*/
     ],
     */
@@ -25,10 +25,10 @@ import com.faizzfanani.core_storage.entity.GithubEntity
     exportSchema = true
 )
 abstract class LocalStorageDatabase : RoomDatabase(){
-    abstract fun newsDao(): GithubDao
+    abstract fun githubDao(): GithubDao
 
     /*RENAME COLUMN EXAMPLE
-    @RenameColumn(tableName = "table_news", fromColumnName = "tesColumnTes", toColumnName = "singleColumn")
+    @RenameColumn(tableName = "user_github", fromColumnName = "tesColumnTes", toColumnName = "singleColumn")
     class MyAutoMigration : AutoMigrationSpec
     */
 }

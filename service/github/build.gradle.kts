@@ -7,9 +7,10 @@ plugins {
 }
 
 android {
-    namespace = Config.coreNamespace
+    namespace = Config.serviceGithubNamespace
     compileSdk = Config.targetSdk
     flavorDimensions.add("version")
+
     defaultConfig {
         minSdk = Config.minSdk
 
@@ -20,23 +21,15 @@ android {
     productFlavors {
         create("staging"){
             dimension = "version"
-            resValue("string", "app_name", "Staging Technical Test")
+            resValue("string", "app_name", "Staging Livin Merchant")
         }
         create("production"){
             dimension = "version"
-            resValue("string", "app_name", "Technical Test")
+            resValue("string", "app_name", "Livin Merchant")
         }
     }
 
     buildTypes {
-        debug {
-            manifestPlaceholders.putAll(
-                mapOf(
-                    "GITHUB_BASE_URL" to Config.githubBaseUrl,
-                    "GITHUB_API_TOKEN" to Config.githubApiToken,
-                )
-            )
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -52,7 +45,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
     kapt {
         correctErrorTypes = true
     }
@@ -60,12 +52,16 @@ android {
 
 dependencies {
 
-    api (Libraries.kotlin)
-    implementation (Libraries.appCompat)
+    implementation(project(":core-storage"))
 
-    testImplementation (Libraries.junit)
-    androidTestImplementation (Libraries.testJunit)
-    androidTestImplementation (Libraries.espresso)
+    testImplementation(Libraries.junit)
+    androidTestImplementation(Libraries.testJunit)
+    androidTestImplementation(Libraries.espresso)
+
+    // dagger-hilt
+    implementation(Libraries.daggerHilt)
+    kapt(Libraries.daggerCompiler)
+    kapt (Libraries.hiltCompiler)
 
     // retrofit2
     implementation (Libraries.retrofit)
@@ -74,17 +70,4 @@ dependencies {
     // okhttp3
     implementation (Libraries.okhttp)
     implementation (Libraries.okhttpInterceptor)
-
-    // dagger-hilt
-    implementation (Libraries.daggerHilt)
-    kapt (Libraries.daggerCompiler)
-    kapt (Libraries.hiltCompiler)
-
-    // chucker
-    implementation (Libraries.chucker)
-
-    // coroutines
-    api (Libraries.coroutinesCore)
-    api (Libraries.coroutinesAndroid)
-
 }

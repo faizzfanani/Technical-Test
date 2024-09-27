@@ -14,6 +14,6 @@ class DaoModule {
     @Provides
     @Singleton
     fun provideNewsDao(db: LocalStorageDatabase): GithubDao {
-        return db.newsDao()
+        return db.githubDao()
     }
 }

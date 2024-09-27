@@ -20,11 +20,11 @@ android {
     productFlavors {
         create("staging"){
             dimension = "version"
-            resValue("string", "app_name", "Staging Livin Merchant")
+            resValue("string", "app_name", "Staging Technical Test")
         }
         create("production"){
             dimension = "version"
-            resValue("string", "app_name", "Livin Merchant")
+            resValue("string", "app_name", "Technical Test")
         }
     }
 

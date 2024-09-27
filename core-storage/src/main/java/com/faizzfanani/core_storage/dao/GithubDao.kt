@@ -8,12 +8,12 @@ import com.faizzfanani.core_storage.entity.GithubEntity
 
 @Dao
 interface GithubDao {
-    @Query("SELECT * FROM table_github")
-    fun getNews(): List<GithubEntity>
+    @Query("SELECT * FROM user_github")
+    fun getUsers(): List<GithubEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNews(data: List<GithubEntity>)
+    suspend fun insertUsers(data: List<GithubEntity>)
 
-    @Query("DELETE FROM table_github WHERE id = :id")
-    suspend fun deleteNews(id: String)
+    @Query("DELETE FROM user_github WHERE id = :id")
+    suspend fun deleteUser(id: Int)
 }
