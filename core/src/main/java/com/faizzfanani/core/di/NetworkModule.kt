@@ -11,7 +11,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -41,20 +40,6 @@ object NetworkModule {
     fun provideOkHttpClient(@ApplicationContext appContext: Context): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
-        val referrerInterceptor = Interceptor { chain ->
-            val chainBuilder = chain.request()
-
-            val urlWithApiKey = chainBuilder.url.newBuilder()
-                .build()
-
-            val request = chainBuilder.newBuilder()
-                .url(urlWithApiKey)
-                .build()
-
-            chain.proceed(request)
-        }
-
-        builder.addInterceptor(referrerInterceptor)
         builder.addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         builder.readTimeout(60, TimeUnit.SECONDS)
         builder.connectTimeout(60, TimeUnit.SECONDS)

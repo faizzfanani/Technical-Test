@@ -18,17 +18,6 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    productFlavors {
-        create("staging"){
-            dimension = "version"
-            resValue("string", "app_name", "Staging Livin Merchant")
-        }
-        create("production"){
-            dimension = "version"
-            resValue("string", "app_name", "Livin Merchant")
-        }
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false

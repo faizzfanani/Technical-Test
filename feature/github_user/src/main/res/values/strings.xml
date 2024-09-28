@@ -7,4 +7,5 @@
     <string name="label_discover">Discover</string>
     <string name="btn_load_more">load more</string>
     <string name="label_reset">reset</string>
+    <string name="empty_state">empty state</string>
 </resources>

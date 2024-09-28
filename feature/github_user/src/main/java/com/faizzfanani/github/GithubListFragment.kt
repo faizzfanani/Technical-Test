@@ -54,6 +54,8 @@ class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), Connectivi
             viewModel.getGithubUser()
         }
 
+        Glide.with(requireContext()).asGif().load(R.drawable.empty).into(viewBinding.imageEmpty)
+
         viewBinding.rvUser.apply {
             setHasFixedSize(true)
             adapter = UserAdapter {
@@ -105,6 +107,7 @@ class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), Connectivi
     private fun bindViewModel(){
         viewModel.successListEvent.observe(viewLifecycleOwner){
             it.contentIfNotHaveBeenHandle?.let {data ->
+                viewBinding.imageEmpty.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE
                 if (data.isNotEmpty()){
                     Timber.d("userList:success = ", data.toString())
                     userAdapter.addList(data.distinct())
@@ -121,12 +124,14 @@ class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), Connectivi
                 Timber.d("userDetail:success = ", data.toString())
                 setDetail(data)
                 viewBinding.rvUser.visibility = View.GONE
+                viewBinding.imageEmpty.visibility = View.GONE
             }
         }
 
         viewModel.errorEvent.observe(viewLifecycleOwner){
             it.contentIfNotHaveBeenHandle?.let { message ->
                 Timber.d("userList:error = ", message)
+                viewBinding.imageEmpty.visibility = View.VISIBLE
             }
         }
 
@@ -138,6 +143,7 @@ class GithubListFragment : BaseFragment<FragmentGithubListBinding>(), Connectivi
                 if (isLoading){
                     viewBinding.showDetail.root.visibility = View.GONE
                     viewBinding.rvUser.visibility = View.GONE
+                    viewBinding.imageEmpty.visibility = View.GONE
                     viewBinding.btnLoadMore.progressingAnimation()
                     viewBinding.progressCircular.visibility = viewBinding.btnLoadMore.visibility
                 } else{

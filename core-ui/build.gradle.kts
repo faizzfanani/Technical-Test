@@ -33,16 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    productFlavors {
-        create("staging"){
-            dimension = "version"
-            resValue("string", "app_name", "Staging Technical Test")
-        }
-        create("production"){
-            dimension = "version"
-            resValue("string", "app_name", "Technical Test")
-        }
-    }
+
     kapt {
         correctErrorTypes = true
     }

@@ -14,16 +14,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-    productFlavors {
-        create("staging"){
-            dimension = "version"
-            resValue("string", "app_name", "Staging Technical Test")
-        }
-        create("production"){
-            dimension = "version"
-            resValue("string", "app_name", "Technical Test")
-        }
-    }
+
     buildTypes {
         release {
             isMinifyEnabled = false

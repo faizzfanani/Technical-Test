@@ -42,18 +42,6 @@ android {
         }
     }
 
-    productFlavors {
-        create("staging"){
-            dimension = "version"
-            applicationIdSuffix = ".staging"
-            resValue("string", "app_name", "Staging Technical Test")
-        }
-        create("production"){
-            dimension = "version"
-            resValue("string", "app_name", "Technical Test")
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
