@@ -1,7 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     kotlin("kapt")
 }
 
@@ -46,12 +47,15 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":service:github"))
 
-    testImplementation(Libraries.junit)
-    androidTestImplementation(Libraries.testJunit)
-    androidTestImplementation(Libraries.espresso)
+    // Unit Testing
+    testImplementation(libs.junit)
+
+    // Android Instrumentation Testing
+    androidTestImplementation(libs.test.junit)
+    androidTestImplementation(libs.espresso)
 
     // dagger-hilt
-    implementation(Libraries.daggerHilt)
-    kapt(Libraries.daggerCompiler)
-    kapt (Libraries.hiltCompiler)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+    ksp(libs.hilt.compiler)
 }

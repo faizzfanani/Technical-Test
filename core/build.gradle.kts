@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     kotlin("kapt")
 }
 
@@ -49,33 +49,35 @@ android {
 
 dependencies {
 
-    api (Libraries.kotlin)
-    implementation (Libraries.appCompat)
+    api(libs.kotlin.stdlib)
+    implementation(libs.kotlin.core)
 
-    testImplementation (Libraries.junit)
-    androidTestImplementation (Libraries.testJunit)
-    androidTestImplementation (Libraries.espresso)
+    // Unit Testing
+    testImplementation(libs.junit)
 
-    // retrofit2
-    implementation (Libraries.retrofit)
-    implementation (Libraries.retrofitConverterGson)
+    // Android Instrumentation Testing
+    androidTestImplementation(libs.test.junit)
+    androidTestImplementation(libs.espresso)
 
-    // okhttp3
-    implementation (Libraries.okhttp)
-    implementation (Libraries.okhttpInterceptor)
+    // retrofit
+    api(libs.retrofit)
+    api(libs.retrofit.converter.gson)
+    api(libs.okhttp)
+    api(libs.okhttp.interceptor)
 
     // dagger-hilt
-    implementation (Libraries.daggerHilt)
-    kapt (Libraries.daggerCompiler)
-    kapt (Libraries.hiltCompiler)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+    ksp(libs.hilt.compiler)
 
     // chucker
-    implementation (Libraries.chucker)
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
 
     // coroutines
-    api (Libraries.coroutinesCore)
-    api (Libraries.coroutinesAndroid)
+    api (libs.coroutines.core)
+    api (libs.coroutines.android)
 
     // timber
-    api (Libraries.timber)
+    api (libs.timber)
 }

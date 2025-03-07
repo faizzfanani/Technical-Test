@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     kotlin("kapt")
 }
 
@@ -62,26 +62,28 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":navigation"))
 
-    implementation(Libraries.activity)
-    implementation(Libraries.material)
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.activity:activity:1.9.2")
 
-    testImplementation(Libraries.junit)
-    androidTestImplementation(Libraries.testJunit)
-    androidTestImplementation(Libraries.espresso)
+    // Unit Testing
+    testImplementation(libs.junit)
+
+    // Android Instrumentation Testing
+    androidTestImplementation(libs.test.junit)
+    androidTestImplementation(libs.espresso)
 
     // multidex
-    implementation(Libraries.multidex)
+    implementation(libs.multidex)
 
     // dagger-hilt
-    implementation(Libraries.daggerHilt)
-    kapt(Libraries.daggerCompiler)
-    kapt(Libraries.hiltCompiler)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+    ksp(libs.hilt.compiler)
 
     //leak canary
-    debugImplementation(Libraries.leakCanary)
+    debugImplementation(libs.leak.canary)
 
     //feature modules
     implementation(project(":feature:github_user"))

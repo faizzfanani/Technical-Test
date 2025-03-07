@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     kotlin("kapt")
 }
 
@@ -47,33 +47,36 @@ dependencies {
     api (project(":core"))
     api (project(":navigation"))
 
-    api (Libraries.appCompat)
-    api (Libraries.activity)
-    api (Libraries.material)
+    api (libs.appcompat)
+    api (libs.activity)
+    api (libs.material)
 
-    testImplementation (Libraries.junit)
-    androidTestImplementation (Libraries.testJunit)
-    androidTestImplementation (Libraries.espresso)
+    // Unit Testing
+    testImplementation(libs.junit)
+
+    // Android Instrumentation Testing
+    androidTestImplementation(libs.test.junit)
+    androidTestImplementation(libs.espresso)
 
     // shimmer animation
-    api (Libraries.shimmer)
+    api (libs.shimmer)
 
     // glide
-    api (Libraries.glide)
-    ksp (Libraries.glideKsp)
+    api (libs.glide)
+    ksp (libs.glide.ksp)
 
     // swipe refresh layout
-    api (Libraries.swipeRefresh)
+    api (libs.swipe.refresh)
 
     // livedata & viewModel
-    api (Libraries.lifecycleViewModel)
-    api (Libraries.lifecycleLivedata)
-    api (Libraries.lifecycleCommon)
-    api (Libraries.lifecycleProcess)
+    api (libs.lifecycle.viewmodel)
+    api (libs.lifecycle.livedata)
+    api (libs.lifecycle.common)
+    api (libs.lifecycle.process)
 
     // dagger-hilt
-    implementation (Libraries.daggerHilt)
-    kapt (Libraries.daggerCompiler)
-    kapt (Libraries.hiltCompiler)
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
+    ksp(libs.hilt.compiler)
 
 }

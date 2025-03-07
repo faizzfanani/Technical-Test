@@ -36,11 +36,13 @@ android {
 dependencies {
 
     // navigation
-    api (Libraries.navigationFragment)
-    api (Libraries.navigationUI)
+    api (libs.navigation.fragment)
+    api (libs.navigation.ui)
 
-    implementation(Libraries.kotlin)
-    testImplementation(Libraries.junit)
-    androidTestImplementation(Libraries.testJunit)
-    androidTestImplementation(Libraries.espresso)
+    // Unit Testing
+    testImplementation(libs.junit)
+
+    // Android Instrumentation Testing
+    androidTestImplementation(libs.test.junit)
+    androidTestImplementation(libs.espresso)
 }
