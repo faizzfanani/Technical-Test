@@ -51,6 +51,7 @@ dependencies {
 
     api(libs.kotlin.stdlib)
     implementation(libs.kotlin.core)
+    implementation(libs.appcompat)
 
     // Unit Testing
     testImplementation(libs.junit)
@@ -68,7 +69,7 @@ dependencies {
     // dagger-hilt
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
     // chucker
     debugImplementation(libs.chucker)

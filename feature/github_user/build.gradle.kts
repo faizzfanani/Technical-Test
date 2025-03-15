@@ -41,6 +41,9 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.12"
+    }
 }
 
 dependencies {
@@ -57,5 +60,5 @@ dependencies {
     // dagger-hilt
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 }

@@ -53,13 +53,13 @@ dependencies {
     androidTestImplementation(libs.espresso)
 
     // room
-    api (libs.room)
-    api (libs.room.runtime)
-    annotationProcessor (libs.room.compiler)
-    ksp (libs.room.compiler)
+    api(libs.room)
+    api(libs.room.runtime)
+    ksp(libs.room.compiler)
+    ksp(libs.ksp.api)
 
     // dagger-hilt
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 }

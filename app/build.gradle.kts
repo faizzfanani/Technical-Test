@@ -80,7 +80,7 @@ dependencies {
     // dagger-hilt
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
     //leak canary
     debugImplementation(libs.leak.canary)

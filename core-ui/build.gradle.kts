@@ -51,6 +51,11 @@ dependencies {
     api (libs.activity)
     api (libs.material)
 
+    // Jetpack compose
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material)
+    implementation(libs.compose.tooling.preview)
+
     // Unit Testing
     testImplementation(libs.junit)
 
@@ -77,6 +82,6 @@ dependencies {
     // dagger-hilt
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
 }
