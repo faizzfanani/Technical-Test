@@ -72,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@id/container_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            layout="@layout/detail_user"
+            layout="@layout/fragment_detail_user"
             android:visibility="gone"
             tools:visibility="visible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

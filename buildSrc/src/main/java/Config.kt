@@ -16,5 +16,11 @@ object Config {
     // base url(s)
     const val githubBaseUrl = "https://api.github.com/"
 
-    // key(s)
+    // module(s)
+    const val coreModule = ":core"
+    const val coreUIModule = ":core-ui"
+    const val coreStorageModule = ":core-storage"
+    const val navigationModule = ":navigation"
+    const val serviceGithubModule = ":service:github"
+    const val featureGithubModule = ":feature:github_user"
 }

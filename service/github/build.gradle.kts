@@ -41,7 +41,8 @@ android {
 
 dependencies {
 
-    implementation(project(":core-storage"))
+    // Internal module(s)
+    implementation(project(Config.coreStorageModule))
 
     // Unit Testing
     testImplementation(libs.junit)

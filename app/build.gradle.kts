@@ -59,13 +59,15 @@ android {
 
 dependencies {
 
-    implementation(project(":core"))
-    implementation(project(":navigation"))
+    // Internal module(s)
+    implementation(project(Config.coreModule))
+    implementation(project(Config.navigationModule))
+    implementation(project(Config.featureGithubModule))
 
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.activity:activity:1.9.2")
+    implementation(libs.material)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
 
     // Unit Testing
     testImplementation(libs.junit)
@@ -85,6 +87,4 @@ dependencies {
     //leak canary
     debugImplementation(libs.leak.canary)
 
-    //feature modules
-    implementation(project(":feature:github_user"))
 }

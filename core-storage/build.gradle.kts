@@ -43,7 +43,8 @@ android {
 
 
 dependencies {
-    api (project(":core"))
+    // Internal module(s)
+    api (project(Config.coreModule))
 
     // Unit Testing
     testImplementation(libs.junit)

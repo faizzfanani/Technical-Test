@@ -8,8 +8,8 @@ import id.faizzfanani.technical_test.navigation.R
 fun goToUserList(view: View, data:Any? = null){
     view.findNavController().navigate(Uri.parse(view.context.getString(R.string.github_list_url)))
 }
-fun goToUserDetail(view: View, data:Any? = null){
-    view.findNavController().navigate(Uri.parse(view.context.getString(R.string.github_detail_url)))
+fun goToUserDetail(view: View, data: String? = null){
+    view.findNavController().navigate(Uri.parse(view.context.getString(R.string.github_detail_url) + "/$data"))
 }
 fun back(view: View){
     view.findNavController().popBackStack()

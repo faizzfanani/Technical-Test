@@ -26,10 +26,16 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -39,13 +45,15 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 
 dependencies {
 
-    api (project(":core"))
-    api (project(":navigation"))
+    // Internal module(s)
+    api (project(Config.coreModule))
+    api (project(Config.navigationModule))
 
     api (libs.appcompat)
     api (libs.activity)
@@ -84,4 +92,18 @@ dependencies {
     ksp(libs.dagger.compiler)
     kapt(libs.hilt.compiler)
 
+    // jetpack compose
+    api(libs.compose.ui)
+    api(libs.compose.material)
+    api(libs.compose.tooling.preview)
+    api(libs.compose.lifecycle)
+    api(libs.compose.activity)
+    api(libs.androidx.material3)
+    debugApi(libs.compose.ui.tooling)
+
+    // coil image loader
+    api(libs.coil.compose)
+
+    // compose shimmer
+    api(libs.accompanist.placeholder.material)
 }

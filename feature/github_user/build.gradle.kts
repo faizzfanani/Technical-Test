@@ -37,18 +37,20 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
     kapt {
         correctErrorTypes = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.12"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 
 dependencies {
-    implementation(project(":core-ui"))
-    implementation(project(":service:github"))
+    // Internal module(s)
+    implementation(project(Config.coreUIModule))
+    implementation(project(Config.serviceGithubModule))
 
     // Unit Testing
     testImplementation(libs.junit)

@@ -1,13 +1,19 @@
 [versions]
+accompanistPlaceholderMaterial = "0.33.2-alpha"
+activityVersion = "1.9.2"
+coilCompose = "2.5.0"
 kotlin = "1.9.22"
 kotlin-core = "1.12.0"
 compose-ui = "1.7.8"
 compose-material = "1.7.8"
+compose-activity = "1.8.2"
+compose-lifecycle = "2.7.0"
 agp = "8.2.2"
 appcompat = "1.7.0"
 activity = "1.9.0"
 material = "1.12.0"
 junit = "4.13.2"
+material3 = "1.3.1"
 test-junit = "1.2.1"
 espresso = "3.6.1"
 dagger = "2.48.1"
@@ -26,12 +32,19 @@ navigation = "2.8.9"
 leakCanary = "2.12"
 timber = "5.0.1"
 jetbrainsKotlinJvm = "1.9.22"
-ksp = "1.9.22-1.0.16"
+ksp = "1.9.22-1.0.17"
 
 [libraries]
+accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanistPlaceholderMaterial" }
+androidx-activity = { module = "androidx.activity:activity", version.ref = "activityVersion" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose-material" }
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
+compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 material = { module = "com.google.android.material:material", version.ref = "material" }

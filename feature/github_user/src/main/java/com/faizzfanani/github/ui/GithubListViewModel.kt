@@ -1,4 +1,4 @@
-package com.faizzfanani.github
+package com.faizzfanani.github.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -8,6 +8,8 @@ import com.faizzfanani.service_github.domain.model.GithubUser
 import com.faizzfanani.service_github.domain.usecase.GetGithubUserUseCase
 import com.faizzfanani.service_github.domain.usecase.SearchGithubUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,24 +24,25 @@ class GithubListViewModel @Inject constructor(
         addUseCase(searchGithubUserUseCase)
     }
 
-    val successListEvent = MutableLiveData<Event<List<GithubUser>>>()
     val successDetailEvent = MutableLiveData<Event<GithubUser>>()
     val errorEvent = MutableLiveData<Event<String>>()
     val onLoadingEvent = MutableLiveData<Event<Boolean>>()
 
+    private val _userList = MutableStateFlow<List<GithubUser>>(emptyList())
+    val userList: StateFlow<List<GithubUser>> = _userList
+
     val pageSize = 30
     var currentPage = 1
-    var isLastPage = false
     var isLoading = false
 
-    fun getGithubUser(){
+    fun getGithubUserList(){
         viewModelScope.launch {
             getGithubUserUseCase.execute(
                 page = currentPage,
                 size = pageSize,
                 output = GetGithubUserUseCase.Output(
                     success = {
-                        successListEvent.value = Event(it)
+                        _userList.value = it
                     },
                     error = {
                         errorEvent.value = Event(it)
@@ -53,11 +56,12 @@ class GithubListViewModel @Inject constructor(
         }
     }
 
-    fun searchGithubUser(username: String){
+    fun userByUsername(username: String){
         viewModelScope.launch {
             searchGithubUserUseCase.execute(username = username,
                 output = SearchGithubUserUseCase.Output(
                     success = {
+                        _userList.value = listOf(it)
                         successDetailEvent.value = Event(it)
                     },
                     error = {
