@@ -2,4 +2,6 @@
 <resources>
     <string name="github_list_url">feature:github/user-list</string>
     <string name="github_detail_url">feature:github/user-detail</string>
+    <string name="pcs_list_url">feature:pcs/user-list</string>
+    <string name="pcs_detail_url">feature:pcs/user-detail</string>
 </resources>

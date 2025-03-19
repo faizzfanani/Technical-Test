@@ -1,4 +1,4 @@
-package com.faizzfanani.service_github
+package com.faizzfanani.service_pcs
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

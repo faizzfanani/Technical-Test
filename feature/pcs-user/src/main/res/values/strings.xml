@@ -1,0 +1,4 @@
+<resources>
+    <string name="label_address_detail">Address details</string>
+    <string name="label_created_date">created at : %1s</string>
+</resources>

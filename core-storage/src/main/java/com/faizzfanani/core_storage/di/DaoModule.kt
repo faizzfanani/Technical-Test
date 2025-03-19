@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import com.faizzfanani.core_storage.dao.GithubDao
+import com.faizzfanani.core_storage.dao.PcsDao
 import com.faizzfanani.core_storage.database.LocalStorageDatabase
 import javax.inject.Singleton
 
@@ -13,7 +14,13 @@ import javax.inject.Singleton
 class DaoModule {
     @Provides
     @Singleton
-    fun provideNewsDao(db: LocalStorageDatabase): GithubDao {
+    fun provideGithubDao(db: LocalStorageDatabase): GithubDao {
         return db.githubDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providePcsDao(db: LocalStorageDatabase): PcsDao {
+        return db.pcsDao()
     }
 }

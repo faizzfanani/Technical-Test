@@ -11,6 +11,9 @@ fun goToUserList(view: View, data:Any? = null){
 fun goToUserDetail(view: View, data: String? = null){
     view.findNavController().navigate(Uri.parse(view.context.getString(R.string.github_detail_url) + "/$data"))
 }
+fun goToPcsUserDetail(view: View, data: String? = null){
+    view.findNavController().navigate(Uri.parse(view.context.getString(R.string.pcs_detail_url) + "/$data"))
+}
 fun back(view: View){
     view.findNavController().popBackStack()
 }

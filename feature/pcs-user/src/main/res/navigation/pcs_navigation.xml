@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pcs_navigation"
+    app:startDestination="@id/pcs_list_fragment">
+    <fragment
+        android:id="@+id/pcs_list_fragment"
+        android:name="com.faizzfanani.pcs.ui.PcsUserListFragment"
+        android:label="pcs_list_fragment"
+        tools:layout="@layout/fragment_pcs_user_list">
+        <deepLink
+            app:uri="@string/pcs_list_url"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/pcs_detail_fragment"
+        android:name="com.faizzfanani.pcs.ui.PcsUserDetailFragment"
+        android:label="pcs_detail_fragment"
+        tools:layout="@layout/fragment_pcs_detail_user">
+        <deepLink
+            app:uri="feature:pcs/user-detail/{key_user_id}"/>
+        <argument
+            android:name="key_user_id"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+</navigation>

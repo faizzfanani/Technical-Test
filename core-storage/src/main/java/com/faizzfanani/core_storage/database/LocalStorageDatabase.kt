@@ -3,10 +3,12 @@ package com.faizzfanani.core_storage.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.faizzfanani.core_storage.dao.GithubDao
+import com.faizzfanani.core_storage.dao.PcsDao
 import com.faizzfanani.core_storage.entity.GithubEntity
+import com.faizzfanani.core_storage.entity.PcsEntity
 
 @Database(
-    entities = [GithubEntity::class],
+    entities = [GithubEntity::class, PcsEntity::class],
     version = 1,
 
     /*AUTO MIGRATION
@@ -26,6 +28,7 @@ import com.faizzfanani.core_storage.entity.GithubEntity
 )
 abstract class LocalStorageDatabase : RoomDatabase(){
     abstract fun githubDao(): GithubDao
+    abstract fun pcsDao(): PcsDao
 
     /*RENAME COLUMN EXAMPLE
     @RenameColumn(tableName = "user_github", fromColumnName = "tesColumnTes", toColumnName = "singleColumn")

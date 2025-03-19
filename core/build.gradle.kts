@@ -22,6 +22,7 @@ android {
             manifestPlaceholders.putAll(
                 mapOf(
                     "GITHUB_BASE_URL" to Config.githubBaseUrl,
+                    "PCS_BASE_URL" to Config.pcsBaseUrl,
                     "GITHUB_API_TOKEN" to "",
                 )
             )

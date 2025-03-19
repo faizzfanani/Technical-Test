@@ -11,10 +11,13 @@ object Config {
     const val navigationNamespace = "${baseNameSpace}.navigation"
     const val coreStorageNamespace = "${baseNameSpace}.core_storage"
     const val serviceGithubNamespace = "${baseNameSpace}.service_github"
+    const val servicePcsNamespace = "${baseNameSpace}.service_pcs"
     const val featureGithubNamespace = "${baseNameSpace}.feature_github_user"
+    const val featurePcsNamespace = "${baseNameSpace}.feature_pcs_user"
 
     // base url(s)
     const val githubBaseUrl = "https://api.github.com/"
+    const val pcsBaseUrl = "https://66b197c51ca8ad33d4f482c9.mockapi.io/"
 
     // module(s)
     const val coreModule = ":core"
@@ -22,5 +25,7 @@ object Config {
     const val coreStorageModule = ":core-storage"
     const val navigationModule = ":navigation"
     const val serviceGithubModule = ":service:github"
+    const val servicePcsModule = ":service:pcs-user"
     const val featureGithubModule = ":feature:github_user"
+    const val featurePcsModule = ":feature:pcs-user"
 }

@@ -1,4 +1,4 @@
-package com.faizzfanani.service_github
+package com.faizzfanani.service_pcs
 
 import org.junit.Test
 

@@ -63,6 +63,7 @@ dependencies {
     implementation(project(Config.coreModule))
     implementation(project(Config.navigationModule))
     implementation(project(Config.featureGithubModule))
+    implementation(project(Config.featurePcsModule))
 
     implementation(libs.material)
     implementation(libs.appcompat)

@@ -9,6 +9,10 @@ import javax.inject.Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class GithubBaseUrl
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class PcsBaseUrl
+
 // key qualifier(s)
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -18,6 +22,10 @@ annotation class GithubApiToken
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class GithubRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class PcsRetrofit
 
 fun getStringMetadata(context: Context, name: String): String? {
     try {

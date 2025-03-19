@@ -5,6 +5,8 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.faizzfanani.core.utils.GithubApiToken
 import com.faizzfanani.core.utils.GithubBaseUrl
 import com.faizzfanani.core.utils.GithubRetrofit
+import com.faizzfanani.core.utils.PcsBaseUrl
+import com.faizzfanani.core.utils.PcsRetrofit
 import com.faizzfanani.core.utils.getStringMetadata
 import dagger.Module
 import dagger.Provides
@@ -26,6 +28,13 @@ object NetworkModule {
     @Provides
     fun provideNewsUrl(@ApplicationContext appContext: Context): String {
         return getStringMetadata(appContext, "githubBaseUrl")!!
+    }
+
+    @PcsBaseUrl
+    @Singleton
+    @Provides
+    fun providePcsUrl(@ApplicationContext appContext: Context): String {
+        return getStringMetadata(appContext, "pcsBaseUrl")!!
     }
 
     @GithubApiToken
@@ -51,6 +60,17 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideGithubRetrofit(okHttpClient: OkHttpClient, @GithubBaseUrl baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @PcsRetrofit
+    @Provides
+    @Singleton
+    fun providePcsRetrofit(okHttpClient: OkHttpClient, @PcsBaseUrl baseUrl: String): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

@@ -2,8 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/github_navigation">
+    app:startDestination="@id/pcs_navigation">
 
     <include app:graph="@navigation/github_navigation"/>
+    <include app:graph="@navigation/pcs_navigation"/>
 
 </navigation>

@@ -10,6 +10,9 @@
             android:name="githubBaseUrl"
             android:value="${GITHUB_BASE_URL}" />
         <meta-data
+            android:name="pcsBaseUrl"
+            android:value="${PCS_BASE_URL}" />
+        <meta-data
             android:name="githubApiToken"
             android:value="${GITHUB_API_TOKEN}" />
     </application>
